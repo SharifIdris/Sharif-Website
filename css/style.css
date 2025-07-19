@@ -41,20 +41,20 @@
 
 /* Base Styles */
 :root {
-    --primary-color: #3498db;
-    --primary-light: #e3f2fd;
-    --primary-dark: #2980b9;
-    --secondary-color: #2ecc71;
-    --secondary-dark: #27ae60;
-    --dark-color: #2c3e50;
-    --light-color: #f5f5f5;
-    --text-color: #333;
-    --text-light: #777;
+    --primary-color: #4dabf7;
+    --primary-light: #e7f5ff;
+    --primary-dark: #339af0;
+    --secondary-color: #74c0fc;
+    --secondary-dark: #4dabf7;
+    --dark-color: #495057;
+    --light-color: #f8f9fa;
+    --text-color: #343a40;
+    --text-light: #6c757d;
     --white: #ffffff;
-    --gradient: linear-gradient(135deg, #3498db, #2980b9);
-    --gradient-secondary: linear-gradient(135deg, #2ecc71, #27ae60);
-    --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    --card-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    --gradient: linear-gradient(135deg, #4dabf7, #339af0);
+    --gradient-secondary: linear-gradient(135deg, #74c0fc, #4dabf7);
+    --box-shadow: 0 10px 30px rgba(77, 171, 247, 0.15);
+    --card-shadow: 0 5px 15px rgba(77, 171, 247, 0.1);
     --transition: all 0.3s ease;
     --bg-color: #ffffff;
     --card-bg: #ffffff;
@@ -176,10 +176,11 @@ section {
     font-size: 1.6rem;
     border: none;
     outline: none;
-    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 10px rgba(77, 171, 247, 0.2);
     position: relative;
     overflow: hidden;
     z-index: 1;
+    letter-spacing: 0.5px;
 }
 
 .btn::before {
@@ -189,7 +190,7 @@ section {
     left: 0;
     width: 0;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.2);
     transition: width 0.3s ease;
     z-index: -1;
 }
@@ -201,23 +202,25 @@ section {
 .primary-btn {
     background: var(--gradient);
     color: var(--white);
+    border: none;
 }
 
 .primary-btn:hover {
-    box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 7px 15px rgba(77, 171, 247, 0.3);
     transform: translateY(-3px);
 }
 
 .secondary-btn {
-    background-color: transparent;
+    background-color: var(--white);
     color: var(--primary-color);
     border: 2px solid var(--primary-color);
 }
 
 .secondary-btn:hover {
-    background-color: var(--primary-color);
-    color: var(--white);
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
     transform: translateY(-3px);
+    border-color: var(--primary-dark);
 }
 
 .small-btn {

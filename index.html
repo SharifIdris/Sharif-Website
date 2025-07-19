@@ -1428,19 +1428,29 @@
             </div>
         </div>
         <div class="footer-shape"></div>
-        <div id="admin-trigger" style="position: fixed; bottom: 0; right: 0; width: 10px; height: 10px; cursor: default;"></div>
+        <div id="admin-trigger" style="position: fixed; bottom: 10px; right: 10px; width: 15px; height: 15px; cursor: default; background-color: transparent; border-radius: 50%;"></div>
     </footer>
     
     <!-- Hidden Admin Access -->
     <script>
-        // Secret admin access - triple click bottom right corner + press 'a'
+        // Secret admin access - double click the hidden dot + press 's'
         let clickCount = 0;
         let keyPressed = false;
+        const adminTrigger = document.getElementById('admin-trigger');
         
-        document.getElementById('admin-trigger').addEventListener('click', function() {
+        // Add subtle hover effect
+        adminTrigger.addEventListener('mouseover', function() {
+            this.style.boxShadow = '0 0 5px rgba(77, 171, 247, 0.5)';
+        });
+        
+        adminTrigger.addEventListener('mouseout', function() {
+            this.style.boxShadow = 'none';
+        });
+        
+        adminTrigger.addEventListener('click', function() {
             clickCount++;
             
-            if (clickCount >= 3 && keyPressed) {
+            if (clickCount >= 2 && keyPressed) {
                 window.location.href = '/admin-login';
                 clickCount = 0;
                 keyPressed = false;
@@ -1453,7 +1463,7 @@
         });
         
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'a' || e.key === 'A') {
+            if (e.key === 's' || e.key === 'S') {
                 keyPressed = true;
                 
                 // Reset key pressed after 3 seconds
