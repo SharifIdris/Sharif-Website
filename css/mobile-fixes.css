@@ -1,5 +1,64 @@
 /* Mobile responsiveness fixes */
 @media (max-width: 768px) {
+    /* Center all content on mobile */
+    .container {
+        text-align: center;
+    }
+    
+    section {
+        text-align: center;
+    }
+    
+    /* Center section headers */
+    .section-header {
+        align-items: center;
+    }
+    
+    /* Center about section */
+    .about-content {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .about-text {
+        text-align: center;
+    }
+    
+    .about-cards {
+        justify-content: center;
+    }
+    
+    /* Center skills section */
+    .skills-container {
+        align-items: center;
+    }
+    
+    .skills-category {
+        text-align: center;
+    }
+    
+    .skills-header {
+        align-items: center;
+    }
+    
+    /* Center portfolio items */
+    .project-header {
+        text-align: center;
+    }
+    
+    .project-content {
+        text-align: center;
+    }
+    
+    .project-details {
+        align-items: center;
+    }
+    
+    /* Center blog cards */
+    .blog-card {
+        text-align: center;
+    }
+    
     /* Fix contact section alignment */
     .contact-content {
         display: flex;

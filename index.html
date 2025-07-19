@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="css/certificates.css">
     <link rel="stylesheet" href="css/logo.css">
     <link rel="stylesheet" href="css/mobile-fixes.css">
+    <link rel="stylesheet" href="css/footer-toggle.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
@@ -321,40 +322,61 @@
                 <span class="section-subtitle">Professional credentials</span>
                 <h2>My Certifications</h2>
             </div>
-            <div class="certificates-grid">
-                <!-- Certificate 1 - Example (Replace with your actual certificate) -->
-                <div class="certificate-card">
-                    <div class="certificate-img">
-                        <img src="https://images.unsplash.com/photo-1496171367470-9ed9a91ea931?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Virtual Assistant Certification">
-                    </div>
-                    <div class="certificate-content">
-                        <h3>Virtual Assistant Certification</h3>
-                        <span class="issuer">ALX Africa</span>
-                        <span class="date">Issued: June 2023</span>
-                        <p>Professional certification in virtual assistance, covering administrative tasks, communication, and productivity tools.</p>
-                        <a href="#" class="btn">View Certificate</a>
+            <div class="certificates-container">
+                <div class="certificates-preview">
+                    <div class="certificate-preview-card">
+                        <div class="certificate-icon">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <h3>View My Certifications</h3>
+                        <p>Click to see my professional credentials and qualifications</p>
+                        <button class="btn primary-btn show-certificates">View Certificates</button>
                     </div>
                 </div>
                 
-                <!-- Certificate 2 - Example (Replace with your actual certificate) -->
-                <div class="certificate-card">
-                    <div class="certificate-img">
-                        <img src="https://images.unsplash.com/photo-1606337321936-02d1b1a4d5ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Data Science Foundations">
+                <div class="certificates-modal">
+                    <div class="certificates-modal-content">
+                        <div class="certificates-modal-header">
+                            <h3>My Certifications</h3>
+                            <button class="close-certificates">&times;</button>
+                        </div>
+                        <div class="certificates-grid">
+                            <!-- Certificate 1 - Example (Replace with your actual certificate) -->
+                            <div class="certificate-card">
+                                <div class="certificate-img">
+                                    <img src="https://images.unsplash.com/photo-1496171367470-9ed9a91ea931?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Virtual Assistant Certification">
+                                </div>
+                                <div class="certificate-content">
+                                    <h3>Virtual Assistant Certification</h3>
+                                    <span class="issuer">ALX Africa</span>
+                                    <span class="date">Issued: June 2023</span>
+                                    <p>Professional certification in virtual assistance, covering administrative tasks, communication, and productivity tools.</p>
+                                    <a href="#" class="btn">View Certificate</a>
+                                </div>
+                            </div>
+                            
+                            <!-- Certificate 2 - Example (Replace with your actual certificate) -->
+                            <div class="certificate-card">
+                                <div class="certificate-img">
+                                    <img src="https://images.unsplash.com/photo-1606337321936-02d1b1a4d5ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Data Science Foundations">
+                                </div>
+                                <div class="certificate-content">
+                                    <h3>Data Science Foundations</h3>
+                                    <span class="issuer">ALX Africa</span>
+                                    <span class="date">Issued: September 2023</span>
+                                    <p>Certification in data science fundamentals, including Python programming, data analysis, and visualization techniques.</p>
+                                    <a href="#" class="btn">View Certificate</a>
+                                </div>
+                            </div>
+                            
+                            <!-- Add Certificate Card - This is where you'll add new certificates -->
+                            <div class="add-certificate">
+                                <i class="fas fa-certificate"></i>
+                                <h3>More Coming Soon</h3>
+                                <p>I'm continuously learning and earning new certifications to enhance my skills and expertise.</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="certificate-content">
-                        <h3>Data Science Foundations</h3>
-                        <span class="issuer">ALX Africa</span>
-                        <span class="date">Issued: September 2023</span>
-                        <p>Certification in data science fundamentals, including Python programming, data analysis, and visualization techniques.</p>
-                        <a href="#" class="btn">View Certificate</a>
-                    </div>
-                </div>
-                
-                <!-- Add Certificate Card - This is where you'll add new certificates -->
-                <div class="add-certificate">
-                    <i class="fas fa-certificate"></i>
-                    <h3>More Coming Soon</h3>
-                    <p>I'm continuously learning and earning new certifications to enhance my skills and expertise.</p>
                 </div>
             </div>
         </div>
@@ -1075,8 +1097,11 @@
                     <p class="footer-description">Helping businesses leverage technology to streamline operations and boost productivity.</p>
                 </div>
                 <div class="footer-links">
-                    <h3>Quick Links</h3>
-                    <ul>
+                    <div class="footer-links-header">
+                        <h3>Quick Links</h3>
+                        <button class="toggle-links"><i class="fas fa-chevron-down"></i></button>
+                    </div>
+                    <ul class="links-list">
                         <li><a href="#home">Home</a></li>
                         <li><a href="#about">About</a></li>
                         <li><a href="#skills">Skills</a></li>
@@ -1086,14 +1111,6 @@
                         <li><a href="#blog">Blog</a></li>
                         <li><a href="#contact">Contact</a></li>
                         <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                    </ul>
-                </div>
-                <div class="footer-services">
-                    <h3>Services</h3>
-                    <ul>
-                        <li><a href="#services">Virtual Assistance</a></li>
-                        <li><a href="#services">AI Automation</a></li>
-                        <li><a href="#services">Web Development</a></li>
                     </ul>
                 </div>
                 <div class="footer-newsletter">
@@ -1145,6 +1162,7 @@
     <script src="js/certificates.js"></script>
     <script src="js/blog-feed.js"></script>
     <script src="js/site-images.js"></script>
+    <script src="js/mobile-interactions.js"></script>
     <script>
       if (window.netlifyIdentity) {
         window.netlifyIdentity.on("init", user => {
