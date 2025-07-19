@@ -1,11 +1,15 @@
 backend:
   name: git-gateway
   branch: main # Branch to update (optional; defaults to master)
-  # Remove role restrictions to allow all authenticated users
-
 
 media_folder: "images" # Media files will be stored in the repo under images
 public_folder: "/images" # The src attribute for uploaded media will begin with /images
+
+media_library:
+  name: uploadcare
+  config:
+    publicKey: demopublickey # Replace with your Uploadcare public key when you get one
+    multiple: true
 
 collections:
   - name: "certificates"
