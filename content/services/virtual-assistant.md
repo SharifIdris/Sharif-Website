@@ -1,6 +1,6 @@
 ---
 title: Virtual Assistant Services
-description: Professional administrative support, including email management, scheduling, and document preparation to keep you organized and focused.
+description: " "
 icon: fas fa-tasks
 items:
   - Email management & communication
