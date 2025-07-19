@@ -1,0 +1,56 @@
+/* Mobile responsiveness fixes */
+@media (max-width: 768px) {
+    /* Fix contact section alignment */
+    .contact-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .contact-info {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .contact-card {
+        width: 100%;
+        max-width: 400px;
+    }
+    
+    .contact-form-container {
+        width: 100%;
+        max-width: 400px;
+    }
+    
+    /* Fix footer alignment */
+    .footer-content {
+        text-align: center;
+    }
+    
+    .footer-info, .footer-links, .footer-services, .footer-newsletter {
+        width: 100%;
+        margin-bottom: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .footer-logo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .footer-bottom {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .copyright {
+        margin-bottom: 15px;
+        text-align: center;
+    }
+}

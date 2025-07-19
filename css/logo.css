@@ -1,0 +1,31 @@
+/* Logo styles */
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 40px;
+    margin-right: 10px;
+}
+
+.logo h1 {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.logo span {
+    color: #3498db;
+}
+
+/* Responsive logo */
+@media (max-width: 768px) {
+    .logo img {
+        height: 32px;
+    }
+    
+    .logo h1 {
+        font-size: 20px;
+    }
+}
