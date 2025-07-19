@@ -1,6 +1,7 @@
 [build]
   publish = "/"
   command = "echo 'No build command'"
+  functions = "functions"
 
 # Enable automatic deploys from GitHub
 [build.environment]
@@ -36,6 +37,13 @@
   status = 200
   force = true
   conditions = {Role = ["admin"]}
+
+# Redirect for image upload API
+[[redirects]]
+  from = "/images/upload"
+  to = "/.netlify/functions/image-upload"
+  status = 200
+  force = true
 
 # Protect admin panel with authentication
 [[redirects]]

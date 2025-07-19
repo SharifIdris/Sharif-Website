@@ -2,22 +2,19 @@
   "name": "sharif-portfolio",
   "version": "1.0.0",
   "description": "Sharif Abubakar Portfolio Website",
-  "main": "index.html",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/SharifIdris/Sharif-Website.git"
-  },
   "keywords": [
     "portfolio",
-    "website"
+    "netlify"
   ],
   "author": "Sharif Abubakar",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/SharifIdris/Sharif-Website/issues"
-  },
-  "homepage": "https://github.com/SharifIdris/Sharif-Website#readme"
+  "dependencies": {
+    "@octokit/auth-app": "^4.0.9",
+    "@octokit/rest": "^19.0.7",
+    "busboy": "^1.6.0"
+  }
 }
