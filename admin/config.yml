@@ -1,129 +1,80 @@
 backend:
   name: git-gateway
-  branch: main # Branch to update (optional; defaults to master)
+  branch: main
 
-media_folder: "images" # Media files will be stored in the repo under images
-public_folder: "/images" # The src attribute for uploaded media will begin with /images
+media_folder: "images"
+public_folder: "/images"
 
 collections:
-  - name: "certificates"
-    label: "Certificates"
-    folder: "data"
-    create: false
-    slug: "certificates"
-    format: "json"
-    editor:
-      preview: false
-    files:
-      - label: "Certificates"
-        name: "certificates"
-        file: "data/certificates.json"
-        fields:
-          - label: "Certificates"
-            name: "certificates"
-            widget: "list"
-            fields:
-              - {label: "Title", name: "title", widget: "string"}
-              - {label: "Issuer", name: "issuer", widget: "string"}
-              - {label: "Date", name: "date", widget: "string"}
-              - {label: "Description", name: "description", widget: "text"}
-              - {label: "Image", name: "image", widget: "image"}
-              - {label: "Link", name: "link", widget: "string", required: false}
-
   - name: "services"
     label: "Services"
-    folder: "data"
-    create: false
-    slug: "services"
-    format: "json"
+    folder: "content/services"
+    create: true
+    slug: "{{slug}}"
     editor:
-      preview: false
-    files:
-      - label: "Services"
-        name: "services"
-        file: "data/services.json"
-        fields:
-          - label: "Services"
-            name: "services"
-            widget: "list"
-            fields:
-              - {label: "Title", name: "title", widget: "string"}
-              - {label: "Description", name: "description", widget: "text"}
-              - {label: "Icon", name: "icon", widget: "string", hint: "FontAwesome icon class (e.g., fas fa-tasks)"}
-              - {label: "Featured", name: "featured", widget: "boolean", required: false, default: false}
-              - label: "Service Items"
-                name: "items"
-                widget: "list"
-                field: {label: Item, name: item, widget: string}
+      preview: true
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Icon", name: "icon", widget: "string", hint: "FontAwesome icon class (e.g., fas fa-tasks)"}
+      - {label: "Featured", name: "featured", widget: "boolean", required: false, default: false}
+      - label: "Service Items"
+        name: "items"
+        widget: "list"
+        field: {label: Item, name: item, widget: string}
+      - {label: "Body", name: "body", widget: "markdown", required: false}
 
-  - name: "portfolio"
+  - name: "projects"
     label: "Portfolio Projects"
-    folder: "data"
-    create: false
-    slug: "portfolio"
-    format: "json"
+    folder: "content/projects"
+    create: true
+    slug: "{{slug}}"
     editor:
-      preview: false
-    files:
-      - label: "Portfolio Projects"
-        name: "portfolio"
-        file: "data/portfolio.json"
-        fields:
-          - label: "Projects"
-            name: "projects"
-            widget: "list"
-            fields:
-              - {label: "Title", name: "title", widget: "string"}
-              - {label: "Description", name: "description", widget: "text"}
-              - {label: "Image", name: "image", widget: "image"}
-              - {label: "Category", name: "category", widget: "select", options: ["automation", "web", "data"]}
-              - {label: "Link", name: "link", widget: "string"}
+      preview: true
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Image", name: "image", widget: "image"}
+      - {label: "Category", name: "category", widget: "select", options: ["automation", "web", "data"]}
+      - {label: "Link", name: "link", widget: "string", required: false}
+      - {label: "Body", name: "body", widget: "markdown", required: false}
 
   - name: "blog"
     label: "Blog Posts"
-    folder: "data"
-    create: false
-    slug: "blog"
-    format: "json"
+    folder: "content/blog"
+    create: true
+    slug: "{{slug}}"
     editor:
-      preview: false
-    files:
-      - label: "Blog Posts"
-        name: "blog"
-        file: "data/blog.json"
-        fields:
-          - label: "Posts"
-            name: "posts"
-            widget: "list"
-            fields:
-              - {label: "Title", name: "title", widget: "string"}
-              - {label: "Description", name: "description", widget: "text"}
-              - {label: "Image", name: "image", widget: "image"}
-              - {label: "Date", name: "date", widget: "string"}
-              - {label: "Read Time", name: "readTime", widget: "string"}
-              - {label: "Category", name: "category", widget: "string"}
-              - {label: "Featured", name: "featured", widget: "boolean", required: false, default: false}
-              - {label: "Link", name: "link", widget: "string", hint: "URL to the full blog post or '#' if not available yet"}
-              
-  - name: "site-images"
-    label: "Site Images"
+      preview: true
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Image", name: "image", widget: "image"}
+      - {label: "Date", name: "date", widget: "datetime"}
+      - {label: "Read Time", name: "readTime", widget: "string"}
+      - {label: "Category", name: "category", widget: "string"}
+      - {label: "Featured", name: "featured", widget: "boolean", required: false, default: false}
+      - {label: "Body", name: "body", widget: "markdown"}
+
+  - name: "site-settings"
+    label: "Site Settings"
     files:
       - label: "Hero Section"
         name: "hero"
-        file: "data/hero-images.json"
+        file: "content/settings/hero.yml"
         fields:
           - {label: "Profile Image", name: "profileImage", widget: "image", hint: "Your professional headshot"}
           - {label: "Background Image", name: "backgroundImage", widget: "image", hint: "Hero section background image"}
       
       - label: "About Section"
         name: "about"
-        file: "data/about-images.json"
+        file: "content/settings/about.yml"
         fields:
           - {label: "About Image", name: "aboutImage", widget: "image", hint: "Image for the about section"}
       
       - label: "Logo & Branding"
         name: "branding"
-        file: "data/branding.json"
+        file: "content/settings/branding.yml"
         fields:
           - {label: "Logo", name: "logo", widget: "image", hint: "Your site logo"}
           - {label: "Favicon", name: "favicon", widget: "image", hint: "Site favicon (will be resized automatically)"}
