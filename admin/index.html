@@ -5,14 +5,51 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Content Manager | Sharif Abubakar Portfolio</title>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <style>
+    .error-message {
+      background-color: #f8d7da;
+      color: #721c24;
+      padding: 15px;
+      margin: 20px;
+      border-radius: 5px;
+      display: none;
+    }
+    .loading-message {
+      background-color: #d1ecf1;
+      color: #0c5460;
+      padding: 15px;
+      margin: 20px;
+      border-radius: 5px;
+      display: none;
+    }
+  </style>
 </head>
 <body>
+  <div id="loading" class="loading-message">Loading Netlify CMS...</div>
+  <div id="error" class="error-message">
+    There was an error loading the CMS. Please try refreshing the page.
+    <br><br>
+    <button onclick="window.location.reload()">Refresh Page</button>
+  </div>
+
   <!-- Include the script that builds the page and powers Netlify CMS -->
   <script src="https://unpkg.com/netlify-cms@^2.10.192/dist/netlify-cms.js"></script>
   <script>
-    // Fix for the toArray error
+    // Show loading message
+    document.getElementById('loading').style.display = 'block';
+    
+    // Handle errors
+    window.onerror = function(message, source, lineno, colno, error) {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('error').style.display = 'block';
+      console.error('CMS Error:', message, error);
+      return true;
+    };
+    
+    // Initialize Netlify Identity
     if (window.netlifyIdentity) {
       window.netlifyIdentity.on("init", user => {
+        document.getElementById('loading').style.display = 'none';
         if (!user) {
           window.netlifyIdentity.on("login", () => {
             document.location.href = "/admin/";
@@ -20,6 +57,13 @@
         }
       });
     }
+    
+    // Hide loading message when CMS is loaded
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        document.getElementById('loading').style.display = 'none';
+      }, 2000);
+    });
   </script>
 </body>
 </html>

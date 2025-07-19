@@ -1,41 +1,39 @@
-{
-  "services": [
-    {
-      "title": "Virtual Assistance",
-      "description": "Professional administrative support, including email management, scheduling, and document preparation to keep you organized and focused.",
-      "icon": "fas fa-tasks",
-      "items": [
-        "Email management & communication",
-        "Calendar scheduling & organization",
-        "Document preparation & management",
-        "Research & data collection",
-        "Customer service support"
-      ]
-    },
-    {
-      "title": "AI Automation",
-      "description": "Expert guidance and implementation of AI tools to automate repetitive tasks, enhance workflows, and boost overall productivity.",
-      "icon": "fas fa-robot",
-      "featured": true,
-      "items": [
-        "AI tool selection & implementation",
-        "Workflow automation solutions",
-        "Process optimization with AI",
-        "Custom automation scripts",
-        "AI integration training"
-      ]
-    },
-    {
-      "title": "Web Development",
-      "description": "Custom website design and development with responsive layouts, optimized performance, and user-friendly interfaces that represent your brand effectively.",
-      "icon": "fas fa-code",
-      "items": [
-        "Responsive website design",
-        "Website maintenance & updates",
-        "Performance optimization",
-        "Content management systems",
-        "Basic SEO implementation"
-      ]
-
-  ]
-}
+{"services": [
+  {
+    "title": "Virtual Assistance",
+    "description": "Professional administrative support, including email management, scheduling, and document preparation to keep you organized and focused.",
+    "icon": "fas fa-tasks",
+    "items": [
+      "Email management & communication",
+      "Calendar scheduling & organization",
+      "Document preparation & management",
+      "Research & data collection",
+      "Customer service support"
+    ]
+  },
+  {
+    "title": "AI Automation",
+    "description": "Expert guidance and implementation of AI tools to automate repetitive tasks, enhance workflows, and boost overall productivity.",
+    "icon": "fas fa-robot",
+    "featured": true,
+    "items": [
+      "AI tool selection & implementation",
+      "Workflow automation solutions",
+      "Process optimization with AI",
+      "Custom automation scripts",
+      "AI integration training"
+    ]
+  },
+  {
+    "title": "Web Development",
+    "description": "Custom website design and development with responsive layouts, optimized performance, and user-friendly interfaces that represent your brand effectively.",
+    "icon": "fas fa-code",
+    "items": [
+      "Responsive website design",
+      "Website maintenance & updates",
+      "Performance optimization",
+      "Content management systems",
+      "Basic SEO implementation"
+    ]
+  }
+]}
