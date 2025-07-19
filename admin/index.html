@@ -70,6 +70,31 @@
   <!-- Include the script that builds the page and powers Netlify CMS -->
   <script src="https://unpkg.com/netlify-cms@^2.10.192/dist/netlify-cms.js"></script>
   
+  <!-- Custom CMS configuration -->
+  <script>
+    // Wait for CMS to load
+    window.addEventListener('load', function() {
+      // Add custom error handling for media uploads
+      if (window.CMS) {
+        CMS.registerEventListener({
+          name: 'preSave',
+          handler: function(data) {
+            console.log('Preparing to save:', data);
+            return data;
+          }
+        });
+        
+        // Log media errors
+        CMS.registerEventListener({
+          name: 'mediaLibrary',
+          handler: function(data) {
+            console.log('Media library event:', data);
+          }
+        });
+      }
+    });
+  </script>
+  
   <script>
     // Show loader
     document.getElementById('loader').style.display = 'flex';
