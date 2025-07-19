@@ -1,8 +1,9 @@
 ---
 title: Top 5 AI Tools Every Business Should Use in 2023
-description: Discover the most impactful AI tools that can transform your business operations and drive growth in today's competitive landscape.
+description: Discover the most impactful AI tools that can transform your
+  business operations and drive growth in today's competitive landscape.
 image: /images/blog-1.jpg
-date: 2023-06-15
+date: 2025-07-19T09:50:58.768Z
 readTime: 5 min read
 category: AI Tools
 featured: false
