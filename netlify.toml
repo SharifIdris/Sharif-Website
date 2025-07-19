@@ -42,6 +42,14 @@
   to = "/admin-access.html"
   status = 200
 
+# Redirect for image upload page
+[[redirects]]
+  from = "/image-upload"
+  to = "/image-upload.html"
+  status = 200
+  force = true
+  conditions = {Role = ["admin"]}
+
 # Protect admin panel with authentication
 [[redirects]]
   from = "/admin/*"

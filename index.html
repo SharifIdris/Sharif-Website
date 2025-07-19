@@ -1430,10 +1430,41 @@
             </div>
         </div>
         <div class="footer-shape"></div>
-        <div class="admin-access" style="text-align: center; padding: 10px; font-size: 12px;">
-            <a href="/admin-login" style="color: #999; text-decoration: none;">Site Admin</a>
-        </div>
+        <div id="admin-trigger" style="position: fixed; bottom: 0; right: 0; width: 10px; height: 10px; cursor: default;"></div>
     </footer>
+    
+    <!-- Hidden Admin Access -->
+    <script>
+        // Secret admin access - triple click bottom right corner + press 'a'
+        let clickCount = 0;
+        let keyPressed = false;
+        
+        document.getElementById('admin-trigger').addEventListener('click', function() {
+            clickCount++;
+            
+            if (clickCount >= 3 && keyPressed) {
+                window.location.href = '/admin-login';
+                clickCount = 0;
+                keyPressed = false;
+            }
+            
+            // Reset click count after 2 seconds
+            setTimeout(function() {
+                clickCount = 0;
+            }, 2000);
+        });
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'a' || e.key === 'A') {
+                keyPressed = true;
+                
+                // Reset key pressed after 3 seconds
+                setTimeout(function() {
+                    keyPressed = false;
+                }, 3000);
+            }
+        });
+    </script>
 
     <!-- Back to Top Button -->
     <a href="#home" class="back-to-top">

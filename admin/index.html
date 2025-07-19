@@ -96,6 +96,20 @@
     window.addEventListener('DOMContentLoaded', function() {
       setTimeout(function() {
         document.getElementById('loader').style.display = 'none';
+        
+        // Add image upload link to the header
+        const header = document.querySelector('.css-12b66la-AppHeaderContent');
+        if (header) {
+          const uploadLink = document.createElement('a');
+          uploadLink.href = '/image-upload';
+          uploadLink.textContent = 'Quick Image Upload';
+          uploadLink.style.marginLeft = '20px';
+          uploadLink.style.color = '#798291';
+          uploadLink.style.textDecoration = 'none';
+          uploadLink.style.fontWeight = '500';
+          uploadLink.target = '_blank';
+          header.appendChild(uploadLink);
+        }
       }, 2000);
     });
     
