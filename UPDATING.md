@@ -1,94 +1,67 @@
-# How to Update Your Website Content
+# How to Update Your Portfolio Website
 
-This document explains how to update different parts of your website, including certificates, blog posts, and other content.
+This guide explains how to update your portfolio website content using Netlify CMS.
 
-## Updating Certificates
-
-When you obtain new certificates, you can add them to your website in two ways:
-
-### Option 1: Using Netlify CMS (Recommended)
+## Accessing the Admin Panel
 
 1. Go to your website URL + `/admin` (e.g., `https://your-site.netlify.app/admin`)
 2. Log in with your Netlify Identity credentials
-3. Click on "Certificates" in the admin sidebar
-4. Click "Add Certificate" or edit existing ones
-5. Fill in the details:
-   - Title: Name of the certification
-   - Issuer: Organization that issued the certificate (e.g., ALX Africa)
-   - Date: When the certificate was issued (e.g., September 2023)
-   - Description: Brief description of what the certification covers
-   - Image: Upload an image of the certificate or a relevant image
-   - Link: URL to view or verify the certificate (optional)
-6. Click "Publish" to update your website
+3. You'll see the admin dashboard with all editable content collections
 
-### Option 2: Editing the JSON File Directly
+## Updating Content
 
-1. Open the `data/certificates.json` file
-2. Add a new certificate object to the array with the following structure:
-```json
-{
-  "title": "Your New Certificate",
-  "issuer": "ALX Africa",
-  "date": "Month Year",
-  "description": "Description of the certification and skills it validates.",
-  "image": "path/to/certificate-image.jpg",
-  "link": "optional-link-to-certificate"
-}
-```
-3. Save the file and deploy your website
+### Portfolio Projects
+1. Click on "Portfolio Projects" in the sidebar
+2. Edit existing projects or add new ones
+3. For each project, you can update:
+   - Title
+   - Description
+   - Image
+   - Category
+   - Link
 
-## Updating Blog Posts
+### Blog Posts
+1. Click on "Blog Posts" in the sidebar
+2. Edit existing posts or add new ones
+3. For each post, you can update:
+   - Title
+   - Description
+   - Image
+   - Date
+   - Read Time
+   - Category
+   - Featured status
+   - Link
 
-Your blog posts can be updated dynamically:
+### Services
+1. Click on "Services" in the sidebar
+2. Edit existing services or add new ones
+3. For each service, you can update:
+   - Title
+   - Description
+   - Icon (FontAwesome class)
+   - Featured status
+   - Service items (list)
 
-### Option 1: Using Netlify CMS (Recommended)
+### Certificates
+1. Click on "Certificates" in the sidebar
+2. Edit existing certificates or add new ones
+3. For each certificate, you can update:
+   - Title
+   - Issuer
+   - Date
+   - Description
+   - Image
+   - Link
 
-1. Go to your website URL + `/admin`
-2. Click on "Blog Posts" in the admin sidebar
-3. Click "Add Blog Post" or edit existing ones
-4. Fill in the details:
-   - Title: Blog post title
-   - Description: Brief summary of the post
-   - Image: Featured image for the blog post
-   - Date: Publication date
-   - Read Time: Estimated reading time
-   - Category: Blog post category
-   - Featured: Toggle to make it a featured post
-   - Link: URL to the full blog post
-5. Click "Publish" to update your website
+## Publishing Changes
 
-### Option 2: Editing the JSON File Directly
+After making your changes:
+1. Click the "Save" button
+2. Your changes will be committed to the GitHub repository
+3. Netlify will automatically rebuild and deploy your site
+4. Changes should be live within a few minutes
 
-1. Open the `data/blog.json` file
-2. Add a new blog post object to the "posts" array:
-```json
-{
-  "title": "Your New Blog Post",
-  "description": "Brief description of your blog post.",
-  "image": "path/to/blog-image.jpg",
-  "date": "Month Day, Year",
-  "readTime": "X min read",
-  "category": "Category Name",
-  "featured": false,
-  "link": "url-to-full-post"
-}
-```
-3. Save the file and deploy your website
+## Need Help?
 
-## Connecting to an External Blog Platform
-
-If you have a blog on platforms like WordPress, Medium, or Ghost, you can connect your website to automatically fetch the latest posts:
-
-1. Open the `js/blog-feed.js` file
-2. Uncomment the RSS feed section
-3. Replace the `RSS_URL` with your blog's RSS feed URL
-4. Deploy your website
-
-## Other Content Updates
-
-For other sections of your website:
-
-- **Services**: Edit `data/services.json`
-- **Portfolio Projects**: Edit `data/portfolio.json`
-
-Always remember to deploy your website after making changes to see them live.
+If you need assistance with updating your website, please contact the developer.
