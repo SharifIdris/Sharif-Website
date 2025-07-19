@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Admin Login - Sharif Abubakar</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin-panel.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head>
+<body>
+    <div class="admin-login-container">
+        <div class="admin-login-card">
+            <div class="admin-login-header">
+                <h2>Admin Login</h2>
+                <p>Enter your credentials to access the admin panel</p>
+            </div>
+            <form id="adminLoginForm" class="admin-login-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn primary-btn">Login</button>
+            </form>
+            <div class="admin-login-footer">
+                <a href="index.html">Back to Website</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Use Netlify Identity for authentication
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            netlifyIdentity.open();
+            
+            // Listen for successful login
+            netlifyIdentity.on('login', user => {
+                window.location.href = '/admin/';
+            });
+        });
+    </script>
+</body>
+</html>
