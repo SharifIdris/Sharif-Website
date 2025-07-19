@@ -1,0 +1,25 @@
+{
+  "projects": [
+    {
+      "title": "AI Task Automation System",
+      "description": "Developed a custom AI solution that automated repetitive tasks for a marketing agency, reducing manual work by 70% and increasing team productivity.",
+      "image": "images/portfolio-1.jpg",
+      "category": "automation",
+      "link": "#"
+    },
+    {
+      "title": "E-commerce Website",
+      "description": "Designed and developed a responsive e-commerce platform with integrated payment systems, inventory management, and customer analytics dashboard.",
+      "image": "images/portfolio-2.jpg",
+      "category": "web",
+      "link": "#"
+    },
+    {
+      "title": "Customer Insights Dashboard",
+      "description": "Created a comprehensive data analysis solution that helped a retail client understand customer behavior patterns and optimize their marketing strategy.",
+      "image": "images/portfolio-3.jpg",
+      "category": "data",
+      "link": "#"
+    }
+  ]
+}

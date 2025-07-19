@@ -1,0 +1,106 @@
+backend:
+  name: git-gateway
+  branch: main # Branch to update (optional; defaults to master)
+
+media_folder: "images" # Media files will be stored in the repo under images
+public_folder: "/images" # The src attribute for uploaded media will begin with /images
+
+collections:
+  - name: "certificates"
+    label: "Certificates"
+    folder: "data"
+    create: false
+    slug: "certificates"
+    format: "json"
+    editor:
+      preview: false
+    files:
+      - label: "Certificates"
+        name: "certificates"
+        file: "data/certificates.json"
+        fields:
+          - label: "Certificates"
+            name: "certificates"
+            widget: "list"
+            fields:
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Issuer", name: "issuer", widget: "string"}
+              - {label: "Date", name: "date", widget: "string"}
+              - {label: "Description", name: "description", widget: "text"}
+              - {label: "Image", name: "image", widget: "image"}
+              - {label: "Link", name: "link", widget: "string", required: false}
+
+  - name: "services"
+    label: "Services"
+    folder: "data"
+    create: false
+    slug: "services"
+    format: "json"
+    editor:
+      preview: false
+    files:
+      - label: "Services"
+        name: "services"
+        file: "data/services.json"
+        fields:
+          - label: "Services"
+            name: "services"
+            widget: "list"
+            fields:
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Description", name: "description", widget: "text"}
+              - {label: "Icon", name: "icon", widget: "string", hint: "FontAwesome icon class (e.g., fas fa-tasks)"}
+              - {label: "Featured", name: "featured", widget: "boolean", required: false, default: false}
+              - label: "Service Items"
+                name: "items"
+                widget: "list"
+                field: {label: Item, name: item, widget: string}
+
+  - name: "portfolio"
+    label: "Portfolio Projects"
+    folder: "data"
+    create: false
+    slug: "portfolio"
+    format: "json"
+    editor:
+      preview: false
+    files:
+      - label: "Portfolio Projects"
+        name: "portfolio"
+        file: "data/portfolio.json"
+        fields:
+          - label: "Projects"
+            name: "projects"
+            widget: "list"
+            fields:
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Description", name: "description", widget: "text"}
+              - {label: "Image", name: "image", widget: "image"}
+              - {label: "Category", name: "category", widget: "select", options: ["automation", "web", "data"]}
+              - {label: "Link", name: "link", widget: "string"}
+
+  - name: "blog"
+    label: "Blog Posts"
+    folder: "data"
+    create: false
+    slug: "blog"
+    format: "json"
+    editor:
+      preview: false
+    files:
+      - label: "Blog Posts"
+        name: "blog"
+        file: "data/blog.json"
+        fields:
+          - label: "Posts"
+            name: "posts"
+            widget: "list"
+            fields:
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Description", name: "description", widget: "text"}
+              - {label: "Image", name: "image", widget: "image"}
+              - {label: "Date", name: "date", widget: "string"}
+              - {label: "Read Time", name: "readTime", widget: "string"}
+              - {label: "Category", name: "category", widget: "string"}
+              - {label: "Featured", name: "featured", widget: "boolean", required: false, default: false}
+              - {label: "Link", name: "link", widget: "string", hint: "URL to the full blog post or '#' if not available yet"}

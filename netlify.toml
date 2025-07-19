@@ -1,0 +1,17 @@
+[build]
+  publish = "/"
+
+# Redirect for SPA navigation
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = false
+  conditions = {Role = ["anonymous"]}
+
+# Redirect for Netlify CMS admin
+[[redirects]]
+  from = "/admin/*"
+  to = "/admin/index.html"
+  status = 200
+  force = true
