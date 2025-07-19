@@ -1,17 +1,20 @@
 // CMS Content Loader
 document.addEventListener('DOMContentLoaded', async function() {
   try {
+    // Add a timestamp parameter to prevent caching
+    const timestamp = new Date().getTime();
+    
     // Load services
-    await loadServices();
+    await loadServices(timestamp);
     
     // Load projects
-    await loadProjects();
+    await loadProjects(timestamp);
     
     // Load blog posts
-    await loadBlogPosts();
+    await loadBlogPosts(timestamp);
     
     // Load site settings
-    await loadSiteSettings();
+    await loadSiteSettings(timestamp);
     
     console.log('CMS content loaded successfully');
   } catch (error) {
@@ -20,9 +23,9 @@ document.addEventListener('DOMContentLoaded', async function() {
 });
 
 // Load services from CMS
-async function loadServices() {
+async function loadServices(timestamp) {
   try {
-    const response = await fetch('/content/services/index.json');
+    const response = await fetch(`/content/services/index.json?t=${timestamp}`);
     if (!response.ok) return;
     
     const data = await response.json();
@@ -72,9 +75,9 @@ async function loadServices() {
 }
 
 // Load projects from CMS
-async function loadProjects() {
+async function loadProjects(timestamp) {
   try {
-    const response = await fetch('/content/projects/index.json');
+    const response = await fetch(`/content/projects/index.json?t=${timestamp}`);
     if (!response.ok) return;
     
     const data = await response.json();
@@ -152,9 +155,9 @@ async function loadProjects() {
 }
 
 // Load blog posts from CMS
-async function loadBlogPosts() {
+async function loadBlogPosts(timestamp) {
   try {
-    const response = await fetch('/content/blog/index.json');
+    const response = await fetch(`/content/blog/index.json?t=${timestamp}`);
     if (!response.ok) return;
     
     const data = await response.json();
@@ -196,10 +199,10 @@ async function loadBlogPosts() {
 }
 
 // Load site settings from CMS
-async function loadSiteSettings() {
+async function loadSiteSettings(timestamp) {
   try {
     // Load hero settings
-    const heroResponse = await fetch('/content/settings/hero.yml');
+    const heroResponse = await fetch(`/content/settings/hero.yml?t=${timestamp}`);
     if (heroResponse.ok) {
       const heroData = await heroResponse.text();
       const heroSettings = parseYaml(heroData);
@@ -220,7 +223,7 @@ async function loadSiteSettings() {
     }
     
     // Load about settings
-    const aboutResponse = await fetch('/content/settings/about.yml');
+    const aboutResponse = await fetch(`/content/settings/about.yml?t=${timestamp}`);
     if (aboutResponse.ok) {
       const aboutData = await aboutResponse.text();
       const aboutSettings = parseYaml(aboutData);
@@ -234,7 +237,7 @@ async function loadSiteSettings() {
     }
     
     // Load branding settings
-    const brandingResponse = await fetch('/content/settings/branding.yml');
+    const brandingResponse = await fetch(`/content/settings/branding.yml?t=${timestamp}`);
     if (brandingResponse.ok) {
       const brandingData = await brandingResponse.text();
       const brandingSettings = parseYaml(brandingData);
