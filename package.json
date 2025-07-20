@@ -15,6 +15,8 @@
   "dependencies": {
     "@octokit/auth-app": "^4.0.9",
     "@octokit/rest": "^19.0.7",
-    "busboy": "^1.6.0"
+    "@supabase/supabase-js": "^2.39.0",
+    "busboy": "^1.6.0",
+    "formidable": "^3.5.1"
   }
 }
