@@ -151,6 +151,22 @@ const AdminDashboard = () => {
               Migrate Content
             </button>
             <button
+              onClick={() => {
+                fetch('/api/init-db')
+                  .then(response => response.json())
+                  .then(data => {
+                    alert(data.message || 'Database initialized successfully');
+                  })
+                  .catch(error => {
+                    console.error('Error initializing database:', error);
+                    alert('Error initializing database. Check console for details.');
+                  });
+              }}
+              className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md text-sm transition-colors duration-300"
+            >
+              Initialize Database
+            </button>
+            <button
               onClick={() => window.open('/', '_blank')}
               className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-md text-sm transition-colors duration-300"
             >

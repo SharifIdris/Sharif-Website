@@ -27,54 +27,7 @@
     Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
     Access-Control-Allow-Headers = "Origin, X-Requested-With, Content-Type, Accept, Authorization"
 
-# Registration page
-[[redirects]]
-  from = "/register"
-  to = "/register.html"
-  status = 200
-
-# Redirect admin access to secure page
-[[redirects]]
-  from = "/admin-login"
-  to = "/admin-access.html"
-  status = 200
-
-# Redirect for image upload page
-[[redirects]]
-  from = "/image-upload"
-  to = "/image-upload.html"
-  status = 200
-  force = true
-  conditions = {Role = ["admin"]}
-
-# Redirect for image upload API
-[[redirects]]
-  from = "/images/upload"
-  to = "/.netlify/functions/image-upload"
-  status = 200
-  force = true
-
-# Protect admin panel with authentication
-[[redirects]]
-  from = "/admin/*"
-  to = "/admin/index.html"
-  status = 200
-  force = true
-  conditions = {Role = ["admin"]}
-
-# Redirect unauthenticated admin requests
-[[redirects]]
-  from = "/admin/*"
-  to = "/admin-access.html"
-  status = 302
-
-# Redirect rule to handle SPA routing
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-
-# API endpoints
+# API endpoints - MUST come before the SPA catch-all rule
 [[redirects]]
   from = "/api/projects/*"
   to = "/.netlify/functions/api-projects/:splat"
@@ -141,39 +94,56 @@
   status = 200
   force = true
 
-# Legacy content paths (for backward compatibility)
+# Consolidated content proxy redirects
 [[redirects]]
-  from = "/content/*/index.json"
+  from = "/content/*"
   to = "/.netlify/functions/content-proxy"
   status = 200
   force = true
 
+# Registration page
 [[redirects]]
-  from = "/content/blog/*"
-  to = "/.netlify/functions/content-proxy"
+  from = "/register"
+  to = "/register.html"
+  status = 200
+
+# Redirect admin access to secure page
+[[redirects]]
+  from = "/admin-login"
+  to = "/admin-access.html"
+  status = 200
+
+# Redirect for image upload page
+[[redirects]]
+  from = "/image-upload"
+  to = "/image-upload.html"
+  status = 200
+  force = true
+  conditions = {Role = ["admin"]}
+
+# Redirect for image upload API
+[[redirects]]
+  from = "/images/upload"
+  to = "/.netlify/functions/image-upload"
   status = 200
   force = true
 
+# Protect admin panel with authentication
 [[redirects]]
-  from = "/content/projects/*"
-  to = "/.netlify/functions/content-proxy"
+  from = "/admin/*"
+  to = "/admin/index.html"
   status = 200
   force = true
+  conditions = {Role = ["admin"]}
 
+# Redirect unauthenticated admin requests
 [[redirects]]
-  from = "/content/services/*"
-  to = "/.netlify/functions/content-proxy"
-  status = 200
-  force = true
+  from = "/admin/*"
+  to = "/admin-access.html"
+  status = 302
 
+# Redirect rule to handle SPA routing - MUST be last
 [[redirects]]
-  from = "/content/certificates/*"
-  to = "/.netlify/functions/content-proxy"
+  from = "/*"
+  to = "/index.html"
   status = 200
-  force = true
-
-[[redirects]]
-  from = "/content/settings/*"
-  to = "/.netlify/functions/content-proxy"
-  status = 200
-  force = true
