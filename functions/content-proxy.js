@@ -7,10 +7,21 @@ exports.handler = async (event, context) => {
 
   try {
     const fileContent = fs.readFileSync(fullPath, 'utf8');
+    
+    // Determine content type based on file extension
+    let contentType = 'application/json';
+    if (fullPath.endsWith('.md')) {
+      contentType = 'text/markdown';
+    } else if (fullPath.endsWith('.yml') || fullPath.endsWith('.yaml')) {
+      contentType = 'text/yaml';
+    }
+    
     return {
       statusCode: 200,
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': contentType,
+        'Access-Control-Allow-Origin': '*',
+        'Cache-Control': 'public, max-age=300'
       },
       body: fileContent,
     };
@@ -18,7 +29,10 @@ exports.handler = async (event, context) => {
     console.error('Error reading file:', error);
     return {
       statusCode: 404,
-      body: 'Not Found',
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      },
+      body: JSON.stringify({ error: 'File not found', path: filePath }),
     };
   }
 };

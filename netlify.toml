@@ -67,7 +67,31 @@
 
 # Redirect for content files
 [[redirects]]
-  from = "/content/*"
-  to = "/.netlify/functions/content-proxy" # This will be a new Netlify function
+  from = "/*/index.json"
+  to = "/.netlify/functions/content-proxy"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/blog/*"
+  to = "/.netlify/functions/content-proxy"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/projects/*"
+  to = "/.netlify/functions/content-proxy"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/services/*"
+  to = "/.netlify/functions/content-proxy"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/certificates/*"
+  to = "/.netlify/functions/content-proxy"
   status = 200
   force = true

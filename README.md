@@ -1,6 +1,6 @@
 # Sharif Abubakar Portfolio Website
 
-A modern, responsive portfolio website for Angole Sharif Abubakar, Virtual Assistant & AI Tools Expert.
+A modern, responsive portfolio website for Angole Sharif Abubakar, Virtual Assistant & AI Tools Expert. This project includes both a static HTML site and a React application.
 
 ## Deployment Instructions
 
@@ -60,21 +60,43 @@ You can update your portfolio content without touching code using Netlify CMS:
 
 ### Alternative: Manual JSON Editing
 
-If you prefer, you can still manually edit the JSON files in the `data` folder:
+If you prefer, you can still manually edit the JSON files:
 
-1. Edit `data/portfolio.json`, `data/blog.json`, or `data/services.json`
+1. Edit files in `app/public/projects`, `app/public/blog`, or `app/public/services` directories
 2. Commit and push changes to GitHub
 3. Netlify will automatically rebuild and deploy your site
 
+### Project Structure
+
+- `/` - Root directory with static HTML site
+- `/admin` - Netlify CMS admin interface
+- `/app` - React application
+  - `/app/public` - Content files (JSON, Markdown)
+  - `/app/src` - React components and code
+- `/functions` - Netlify serverless functions
+  - `/functions/content-proxy.js` - Function to serve content to React app
+
 ## Local Development
 
-To test the site locally, simply open `index.html` in your web browser.
+### Static Site
+To test the static site locally, simply open `index.html` in your web browser.
+
+### React Application
+To run the React application locally:
+
+1. Navigate to the app directory: `cd app`
+2. Install dependencies: `npm install`
+3. Start the development server: `npm run dev`
+4. Open your browser to the URL shown in the terminal (usually http://localhost:5173)
 
 ## Features
 
 - Responsive design for all devices
 - Dynamic content loading from JSON files
 - Easy content management without coding
-- Modern animations and interactions
+- Modern animations and interactions using Framer Motion
 - Contact form (requires Netlify Forms setup)
 - Social media integration
+- React application with Tailwind CSS
+- Serverless functions for content delivery
+- Expandable/collapsible sections for projects, services, and certificates

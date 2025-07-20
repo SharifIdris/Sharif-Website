@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Virtual Assistant Certification",
+    "issuer": "ALX Africa",
+    "date": "June 2023",
+    "image": "/images/certificates/va-cert.jpg"
+  },
+  {
+    "title": "Data Science Foundations",
+    "issuer": "ALX Africa",
+    "date": "September 2023",
+    "image": "/images/certificates/data-science-cert.jpg"
+  },
+  {
+    "title": "Web Development",
+    "issuer": "Udemy",
+    "date": "January 2023",
+    "image": "/images/certificates/web-dev-cert.jpg"
+  }
+]
