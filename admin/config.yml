@@ -1,13 +1,6 @@
 backend:
   name: git-gateway
   branch: main
-  commit_messages:
-    create: 'Create {{collection}} "{{slug}}"'
-    update: 'Update {{collection}} "{{slug}}"'
-    delete: 'Delete {{collection}} "{{slug}}"'
-    uploadMedia: 'Upload "{{path}}"'
-    deleteMedia: 'Delete "{{path}}"'
-  use_large_media_transforms_in_media_library: false
 
 media_folder: "images/my-photos"
 public_folder: "/images/my-photos"
@@ -18,8 +11,6 @@ collections:
     folder: "content/services"
     create: true
     slug: "{{slug}}"
-    editor:
-      preview: true
     fields:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Description", name: "description", widget: "text"}
@@ -36,11 +27,9 @@ collections:
     folder: "content/projects"
     create: true
     slug: "{{slug}}"
-    editor:
-      preview: true
     fields:
       - {label: "Title", name: "title", widget: "string"}
-      - {label: "Brief Description", name: "brief", widget: "string", hint: "Short description shown in collapsed view"}
+      - {label: "Brief Description", name: "brief", widget: "string"}
       - {label: "Full Description", name: "description", widget: "text"}
       - {label: "Image", name: "image", widget: "image"}
       - {label: "Category", name: "category", widget: "select", options: ["automation", "web", "data", "cybersecurity"]}
@@ -56,74 +45,10 @@ collections:
     folder: "content/blog"
     create: true
     slug: "{{slug}}"
-    editor:
-      preview: true
     fields:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Description", name: "description", widget: "text"}
       - {label: "Image", name: "image", widget: "image"}
-      - {label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false}
-      - {label: "Read Time", name: "readTime", widget: "string", default: "5 min read"}
+      - {label: "Date", name: "date", widget: "datetime"}
       - {label: "Category", name: "category", widget: "string"}
-      - {label: "Featured", name: "featured", widget: "boolean", required: false, default: false}
-      - {label: "Link", name: "link", widget: "string", required: false, default: "#"}
       - {label: "Body", name: "body", widget: "markdown"}
-
-  - name: "site-settings"
-    label: "Site Settings"
-    files:
-      - label: "Hero Section"
-        name: "hero"
-        file: "content/settings/hero.yml"
-        fields:
-          - {label: "Profile Image", name: "profileImage", widget: "image", hint: "Your professional headshot (500x500px recommended)"}
-          - {label: "Background Image", name: "backgroundImage", widget: "image", hint: "Hero section background image (1920x1080px recommended)"}
-          - {label: "Name", name: "name", widget: "string", hint: "Your full name"}
-          - {label: "Title", name: "title", widget: "string", hint: "Your professional title"}
-          - {label: "Tagline", name: "tagline", widget: "string", hint: "Short description of what you do"}
-      
-      - label: "About Section"
-        name: "about"
-        file: "content/settings/about.yml"
-        fields:
-          - {label: "About Image", name: "aboutImage", widget: "image", hint: "Image for the about section (600x800px recommended)"}
-          - {label: "Title", name: "title", widget: "string", hint: "Section heading"}
-          - {label: "Description", name: "description", widget: "markdown", hint: "Your professional bio"}
-          - {label: "Years of Experience", name: "experience", widget: "number", hint: "Your years of professional experience"}
-      
-      - label: "Logo & Branding"
-        name: "branding"
-        file: "content/settings/branding.yml"
-        fields:
-          - {label: "Logo", name: "logo", widget: "image", hint: "Your site logo (SVG or PNG with transparency recommended)"}
-          - {label: "Favicon", name: "favicon", widget: "image", hint: "Site favicon (will be resized automatically)"}
-          - {label: "Primary Color", name: "primaryColor", widget: "string", hint: "Primary brand color (hex code)"}
-          - {label: "Secondary Color", name: "secondaryColor", widget: "string", hint: "Secondary brand color (hex code)"}
-      
-      - label: "Contact Information"
-        name: "contact"
-        file: "content/settings/contact.yml"
-        fields:
-          - {label: "Email", name: "email", widget: "string"}
-          - {label: "Phone", name: "phone", widget: "string"}
-          - {label: "Location", name: "location", widget: "string"}
-          - label: "Social Media"
-            name: "social"
-            widget: "list"
-            fields:
-              - {label: "Platform", name: "platform", widget: "select", options: ["instagram", "github", "linkedin", "twitter", "facebook", "youtube"]}
-              - {label: "URL", name: "url", widget: "string"}
-              - {label: "Username", name: "username", widget: "string"}
-
-  - name: "testimonials"
-    label: "Testimonials"
-    folder: "content/testimonials"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - {label: "Client Name", name: "name", widget: "string"}
-      - {label: "Client Position", name: "position", widget: "string"}
-      - {label: "Client Company", name: "company", widget: "string"}
-      - {label: "Testimonial", name: "testimonial", widget: "text"}
-      - {label: "Client Photo", name: "photo", widget: "image"}
-      - {label: "Rating", name: "rating", widget: "number", min: 1, max: 5, default: 5}
