@@ -1,0 +1,13 @@
+[
+  {
+    "title": "Personal Assistance",
+    "description": "Executive remote support powered by automation and AI—streamlining client onboarding, project workflows, and business communication for founders, creatives, and teams.",
+    "icon": "fa-headset",
+    "featured": false,
+    "items": [
+      " - Inbox & calendar management with automation tools",
+      "- Document drafting",
+      "- AI-integrated task support"
+    ]
+  }
+]

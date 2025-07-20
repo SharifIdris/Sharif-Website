@@ -1,6 +1,6 @@
 [build]
   publish = "/"
-  command = "echo 'No build command'"
+  command = "npm install && node build.js"
   functions = "functions"
 
 # Enable automatic deploys from GitHub
