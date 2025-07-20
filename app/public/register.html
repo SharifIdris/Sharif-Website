@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register Admin User - Sharif Abubakar</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <style>
         :root {
@@ -23,7 +23,7 @@
         }
         
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             background-color: var(--light-bg);
             color: var(--text-color);
             line-height: 1.6;
@@ -85,6 +85,25 @@
         .back-link:hover {
             color: var(--primary-color);
         }
+
+        .status {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
     </style>
 </head>
 <body>
@@ -96,20 +115,42 @@
         <button class="btn" id="signup-button">Sign Up</button>
         <button class="btn" id="login-button">Log In</button>
         
+        <div id="status" class="status"></div>
+        
         <a href="/" class="back-link">Return to Website</a>
     </div>
     
     <script>
+        // Initialize Netlify Identity
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.init({
+                locale: 'en' // Set to your preferred locale
+            });
+        }
+
+        // Show status message
+        function showStatus(message, isSuccess) {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.style.display = 'block';
+            
+            if (isSuccess) {
+                statusEl.className = 'status success';
+            } else {
+                statusEl.className = 'status error';
+            }
+        }
+
         document.getElementById('setup-button').addEventListener('click', function() {
             fetch('/api/setup-identity')
                 .then(response => response.json())
                 .then(data => {
-                    alert('Identity setup initiated. Please check the Netlify dashboard to complete setup.');
+                    showStatus('Identity setup initiated. Please check the Netlify dashboard to complete setup.', true);
                     console.log(data);
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    alert('Error setting up Identity. Please try again.');
+                    showStatus('Error setting up Identity. Please try again.', false);
                 });
         });
 
@@ -121,13 +162,39 @@
             netlifyIdentity.open('login');
         });
         
-        // Redirect to admin after login
+        // Handle user events
+        netlifyIdentity.on('init', user => {
+            console.log('Netlify Identity initialized', user);
+            if (user) {
+                showStatus('You are already logged in. Redirecting to admin panel...', true);
+                setTimeout(() => {
+                    window.location.href = '/admin';
+                }, 1500);
+            }
+        });
+
         netlifyIdentity.on('login', user => {
             console.log('Login', user);
+            showStatus('Login successful! Redirecting to admin panel...', true);
             // Wait for the modal to close
             setTimeout(() => {
-                window.location.href = '/admin/';
-            }, 1000);
+                window.location.href = '/admin';
+            }, 1500);
+        });
+
+        netlifyIdentity.on('signup', user => {
+            console.log('Signup', user);
+            showStatus('Signup successful! You can now log in.', true);
+        });
+
+        netlifyIdentity.on('logout', () => {
+            console.log('Logged out');
+            showStatus('You have been logged out.', true);
+        });
+
+        netlifyIdentity.on('error', err => {
+            console.error('Error', err);
+            showStatus('An error occurred: ' + err.message, false);
         });
     </script>
 </body>
