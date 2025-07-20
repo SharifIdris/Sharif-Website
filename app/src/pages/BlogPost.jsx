@@ -33,10 +33,6 @@ const BlogPost = () => {
             setRelatedPosts(related);
           });
       })
-        } else {
-          throw new Error('Post not found');
-        }
-      })
       .catch(err => {
         console.error('Error fetching post:', err);
         setError(err.message);
