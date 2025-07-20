@@ -114,12 +114,12 @@ const Contact = () => {
                   <div>
                     <h3 className="text-lg font-semibold text-gray-800 mb-1">LinkedIn</h3>
                     <a 
-                      href="https://linkedin.com/in/sharifabubakar" 
+                      href="https://www.linkedin.com/in/angole-sharif-abubakar" 
                       target="_blank" 
                       rel="noopener noreferrer" 
                       className="text-gray-600 hover:text-blue-500 transition-colors duration-300"
                     >
-                      linkedin.com/in/sharifabubakar
+                      linkedin.com/in/angole-sharif-abubakar
                     </a>
                   </div>
                 </div>
@@ -148,12 +148,12 @@ const Contact = () => {
                   <div>
                     <h3 className="text-lg font-semibold text-gray-800 mb-1">WhatsApp</h3>
                     <a 
-                      href="https://wa.me/256123456789" 
+                      href="https://wa.me/sharifidris8" 
                       target="_blank" 
                       rel="noopener noreferrer" 
                       className="text-gray-600 hover:text-blue-500 transition-colors duration-300"
                     >
-                      +256 123 456 789
+                      sharifidris8
                     </a>
                   </div>
                 </div>
@@ -164,7 +164,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-gray-800 mb-1">Location</h3>
-                    <p className="text-gray-600">Kampala, Uganda</p>
+                    <p className="text-gray-600">Lira, Uganda</p>
                   </div>
                 </div>
               </div>
@@ -173,7 +173,7 @@ const Contact = () => {
                 <h3 className="text-lg font-semibold text-gray-800 mb-4">Connect with me</h3>
                 <div className="flex space-x-4">
                   <motion.a
-                    href="https://linkedin.com/in/sharifabubakar"
+                    href="https://www.linkedin.com/in/angole-sharif-abubakar"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-blue-500 hover:text-white transition-colors duration-300"
@@ -345,20 +345,20 @@ const Contact = () => {
           >
             <h2 className="text-3xl font-bold text-gray-800 mb-4">My Location</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Based in Kampala, Uganda, but working with clients worldwide.
+              Based in Lira, Uganda, but working with clients worldwide.
             </p>
           </motion.div>
 
           <div className="rounded-lg overflow-hidden shadow-md">
             <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127672.75772082225!2d32.5472257!3d0.3475964!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x177dbc0f8dd4cb39%3A0x7e7e9be6d32a1c2c!2sKampala%2C%20Uganda!5e0!3m2!1sen!2sus!4v1651234567890!5m2!1sen!2sus" 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63712.88092407855!2d32.86972761878991!3d2.2499999999999982!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1771a8b3e3c7f255%3A0xb3b5331e7f1e1d1f!2sLira%2C%20Uganda!5e0!3m2!1sen!2sus!4v1651234567890!5m2!1sen!2sus" 
               width="100%" 
               height="450" 
               style={{ border: 0 }} 
               allowFullScreen="" 
               loading="lazy" 
               referrerPolicy="no-referrer-when-downgrade"
-              title="Kampala, Uganda Map"
+              title="Lira, Uganda Map"
             ></iframe>
           </div>
         </div>

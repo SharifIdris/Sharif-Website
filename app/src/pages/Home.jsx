@@ -181,22 +181,22 @@ const Home = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
-                title: 'Internship Tracker',
+                title: 'Executive Virtual Assistance',
                 image: '/images/portfolio-1.jpg',
-                category: 'Web Development',
-                description: 'A platform for students to track and manage internship applications and opportunities.'
+                category: 'Virtual Assistant',
+                description: 'Comprehensive virtual assistance services for executives and business owners.'
               },
               {
                 title: 'AI Email Assistant',
                 image: '/images/portfolio-2.jpg',
-                category: 'AI Integration',
+                category: 'AI Tools',
                 description: 'Custom email automation tool that categorizes, prioritizes, and drafts responses.'
               },
               {
-                title: 'Business Dashboard',
+                title: 'Portfolio Website',
                 image: '/images/portfolio-3.jpg',
-                category: 'Data Visualization',
-                description: 'Interactive dashboard for business analytics and performance monitoring.'
+                category: 'Web Development',
+                description: 'Modern, responsive portfolio website with smooth animations and CMS integration.'
               }
             ].map((project, index) => (
               <motion.div

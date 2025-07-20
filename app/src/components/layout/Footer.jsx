@@ -6,9 +6,9 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
   
   const socialLinks = [
-    { name: 'LinkedIn', icon: 'linkedin', url: 'https://linkedin.com/in/sharifabubakar' },
+    { name: 'LinkedIn', icon: 'linkedin', url: 'https://www.linkedin.com/in/angole-sharif-abubakar' },
     { name: 'GitHub', icon: 'github', url: 'https://github.com/SharifIdris' },
-    { name: 'Twitter', icon: 'twitter', url: 'https://twitter.com/sharifabubakar' },
+    { name: 'WhatsApp', icon: 'whatsapp', url: 'https://wa.me/sharifidris8' },
   ];
 
   const footerLinks = [
@@ -78,7 +78,7 @@ const Footer = () => {
               </li>
               <li className="flex items-start">
                 <i className="fas fa-map-marker-alt text-blue-500 mt-1 mr-3"></i>
-                <span className="text-gray-600">Kampala, Uganda</span>
+                <span className="text-gray-600">Lira, Uganda</span>
               </li>
               <li className="flex items-start">
                 <i className="fab fa-whatsapp text-blue-500 mt-1 mr-3"></i>

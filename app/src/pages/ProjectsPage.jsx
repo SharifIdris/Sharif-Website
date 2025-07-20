@@ -21,13 +21,13 @@ const ProjectsPage = () => {
         setProjects([
           {
             id: 1,
-            title: 'Internship Tracker',
-            brief: 'Platform for tracking internship applications',
-            description: 'A comprehensive platform that helps students find, apply for, and track internship opportunities. Features include application status tracking, deadline reminders, and document management.',
+            title: 'Executive Virtual Assistance',
+            brief: 'Comprehensive virtual assistance for busy professionals',
+            description: 'Providing comprehensive virtual assistance services including inbox management, scheduling, document preparation, and administrative support for executives and business owners.',
             image: '/images/portfolio-1.jpg',
-            category: 'web',
-            tech: ['React', 'Node.js', 'MongoDB', 'Express'],
-            link: 'https://internship-tracker.netlify.app'
+            category: 'virtual-assistant',
+            tech: ['Google Workspace', 'Notion', 'Trello', 'Calendly'],
+            link: '#'
           },
           {
             id: 2,
@@ -35,19 +35,49 @@ const ProjectsPage = () => {
             brief: 'Email automation with AI integration',
             description: 'Custom email automation tool that categorizes incoming emails, prioritizes them based on content, and drafts responses using AI. Integrates with Gmail and Outlook.',
             image: '/images/portfolio-2.jpg',
-            category: 'automation',
-            tech: ['Python', 'OpenAI API', 'Gmail API', 'Flask'],
+            category: 'ai-tools',
+            tech: ['ChatGPT', 'Gemini', 'Gmail API', 'Zapier'],
             link: 'https://github.com/SharifIdris/ai-email-assistant'
           },
           {
             id: 3,
-            title: 'Business Analytics Dashboard',
-            brief: 'Interactive data visualization dashboard',
-            description: 'Interactive dashboard for business analytics and performance monitoring. Visualizes key metrics, sales data, and customer insights with customizable widgets.',
+            title: 'Portfolio Website',
+            brief: 'Modern responsive portfolio website',
+            description: 'A modern, responsive portfolio website built with React, Tailwind CSS, and Framer Motion. Features include smooth animations, responsive design, and a content management system.',
             image: '/images/portfolio-3.jpg',
-            category: 'data',
-            tech: ['React', 'D3.js', 'Firebase', 'Tailwind CSS'],
-            link: 'https://business-dashboard-demo.netlify.app'
+            category: 'web',
+            tech: ['React', 'Tailwind CSS', 'Framer Motion', 'Netlify CMS'],
+            link: '#'
+          },
+          {
+            id: 4,
+            title: 'Client Onboarding System',
+            brief: 'Streamlined client onboarding process',
+            description: 'A comprehensive client onboarding system that automates the collection of client information, contract signing, and initial setup. Improves efficiency and client experience.',
+            image: '/images/portfolio-4.jpg',
+            category: 'virtual-assistant',
+            tech: ['Notion', 'Make.com', 'DocuSign', 'Google Forms'],
+            link: '#'
+          },
+          {
+            id: 5,
+            title: 'AI Content Generator',
+            brief: 'Automated content creation with AI',
+            description: 'An AI-powered content generation system that creates blog posts, social media content, and marketing copy based on specific prompts and brand guidelines.',
+            image: '/images/portfolio-5.jpg',
+            category: 'ai-tools',
+            tech: ['GPT-4', 'Midjourney', 'Zapier', 'WordPress'],
+            link: '#'
+          },
+          {
+            id: 6,
+            title: 'E-commerce Website',
+            brief: 'Custom e-commerce solution',
+            description: 'A custom e-commerce website built with modern web technologies. Features include product catalog, shopping cart, secure checkout, and admin dashboard.',
+            image: '/images/portfolio-6.jpg',
+            category: 'web',
+            tech: ['React', 'Node.js', 'MongoDB', 'Stripe'],
+            link: '#'
           }
         ]);
       });
@@ -55,9 +85,9 @@ const ProjectsPage = () => {
 
   const categories = [
     { id: 'all', name: 'All Projects' },
-    { id: 'web', name: 'Web Development' },
-    { id: 'automation', name: 'Automation' },
-    { id: 'data', name: 'Data Projects' }
+    { id: 'virtual-assistant', name: 'Virtual Assistant' },
+    { id: 'ai-tools', name: 'AI Tools' },
+    { id: 'web', name: 'Web Development' }
   ];
 
   const filteredProjects = filter === 'all' 
