@@ -68,7 +68,7 @@
   </div>
 
   <!-- Include the script that builds the page and powers Netlify CMS -->
-  <script src="https://unpkg.com/netlify-cms@^2.10.192/dist/netlify-cms.js"></script>
+  <script src="https://unpkg.com/netlify-cms@^2.10.17/dist/netlify-cms.js"></script>
   
   <!-- Custom CMS configuration -->
   <script>
@@ -76,6 +76,29 @@
     window.addEventListener('load', function() {
       // Add custom error handling for media uploads
       if (window.CMS) {
+        // Fix for getIn error
+        const originalInitWidgets = window.CMS.registerWidget;
+        window.CMS.registerWidget = function(name, control, preview) {
+          if (control && control.prototype) {
+            const originalRender = control.prototype.render;
+            control.prototype.render = function() {
+              // Add a safe getIn method if it doesn't exist
+              if (this.props && this.props.value && !this.props.value.getIn && typeof this.props.value === 'object') {
+                this.props.value.getIn = function(path) {
+                  let result = this;
+                  for (let i = 0; i < path.length; i++) {
+                    if (result == null) return undefined;
+                    result = result[path[i]];
+                  }
+                  return result;
+                }.bind(this.props.value);
+              }
+              return originalRender.apply(this, arguments);
+            };
+          }
+          return originalInitWidgets.call(this, name, control, preview);
+        };
+        
         CMS.registerEventListener({
           name: 'preSave',
           handler: function(data) {
