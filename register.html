@@ -92,6 +92,7 @@
         <h1>Register Admin User</h1>
         <p>Create an admin account to access the admin panel.</p>
         
+        <button class="btn" id="setup-button">Setup Identity</button>
         <button class="btn" id="signup-button">Sign Up</button>
         <button class="btn" id="login-button">Log In</button>
         
@@ -99,6 +100,19 @@
     </div>
     
     <script>
+        document.getElementById('setup-button').addEventListener('click', function() {
+            fetch('/api/setup-identity')
+                .then(response => response.json())
+                .then(data => {
+                    alert('Identity setup initiated. Please check the Netlify dashboard to complete setup.');
+                    console.log(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error setting up Identity. Please try again.');
+                });
+        });
+
         document.getElementById('signup-button').addEventListener('click', function() {
             netlifyIdentity.open('signup');
         });
