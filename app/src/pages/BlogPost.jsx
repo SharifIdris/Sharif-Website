@@ -11,35 +11,28 @@ const BlogPost = () => {
   const [relatedPosts, setRelatedPosts] = useState([]);
 
   useEffect(() => {
-    // First, fetch all blog posts to find the one with matching slug
-    fetch('/content/blog/index.json')
-      .then(response => response.json())
-      .then(data => {
-        const currentPost = data.find(p => p.slug === slug);
+    // Fetch the blog post with the matching slug
+    fetch(`/api/blog/${slug}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to load post');
+        }
+        return response.json();
+      })
+      .then(post => {
+        setPost(post);
         
-        if (currentPost) {
-          setPost(currentPost);
-          
-          // Find related posts (same category, excluding current post)
-          const related = data
-            .filter(p => p.category === currentPost.category && p.slug !== currentPost.slug)
-            .slice(0, 3);
-          setRelatedPosts(related);
-          
-          // Now fetch the full content of the post
-          return fetch(`/content/blog/${slug}.md`)
-            .then(response => {
-              if (!response.ok) {
-                throw new Error('Failed to load post content');
-              }
-              return response.text();
-            })
-            .then(content => {
-              setPost(prev => ({
-                ...prev,
-                content
-              }));
-            });
+        // Fetch all posts to find related ones
+        return fetch('/api/blog')
+          .then(response => response.json())
+          .then(data => {
+            // Find related posts (same category, excluding current post)
+            const related = data
+              .filter(p => p.category === post.category && p.slug !== post.slug)
+              .slice(0, 3);
+            setRelatedPosts(related);
+          });
+      })
         } else {
           throw new Error('Post not found');
         }
@@ -235,31 +228,69 @@ Remember that your AI clone should complement your work rather than replace your
     
     // Split the markdown into lines
     const lines = markdown.split('\n');
+    const result = [];
+    let inList = false;
+    let listItems = [];
     
-    return lines.map((line, index) => {
+    lines.forEach((line, index) => {
       // Heading 1
       if (line.startsWith('# ')) {
-        return <h1 key={index} className="text-3xl font-bold mt-8 mb-4">{line.substring(2)}</h1>;
+        if (inList) {
+          result.push(<ul key={`list-${index}`} className="list-disc ml-6 mb-4">{listItems}</ul>);
+          inList = false;
+          listItems = [];
+        }
+        result.push(<h1 key={index} className="text-3xl font-bold mt-8 mb-4">{line.substring(2)}</h1>);
       }
       // Heading 2
-      if (line.startsWith('## ')) {
-        return <h2 key={index} className="text-2xl font-bold mt-6 mb-3">{line.substring(3)}</h2>;
+      else if (line.startsWith('## ')) {
+        if (inList) {
+          result.push(<ul key={`list-${index}`} className="list-disc ml-6 mb-4">{listItems}</ul>);
+          inList = false;
+          listItems = [];
+        }
+        result.push(<h2 key={index} className="text-2xl font-bold mt-6 mb-3">{line.substring(3)}</h2>);
       }
       // Heading 3
-      if (line.startsWith('### ')) {
-        return <h3 key={index} className="text-xl font-bold mt-5 mb-2">{line.substring(4)}</h3>;
+      else if (line.startsWith('### ')) {
+        if (inList) {
+          result.push(<ul key={`list-${index}`} className="list-disc ml-6 mb-4">{listItems}</ul>);
+          inList = false;
+          listItems = [];
+        }
+        result.push(<h3 key={index} className="text-xl font-bold mt-5 mb-2">{line.substring(4)}</h3>);
       }
       // Unordered list item
-      if (line.startsWith('- ')) {
-        return <li key={index} className="ml-6 mb-2">{line.substring(2)}</li>;
+      else if (line.startsWith('- ')) {
+        inList = true;
+        listItems.push(<li key={`item-${index}`} className="mb-2">{line.substring(2)}</li>);
       }
       // Empty line
-      if (line.trim() === '') {
-        return <br key={index} />;
+      else if (line.trim() === '') {
+        if (inList) {
+          result.push(<ul key={`list-${index}`} className="list-disc ml-6 mb-4">{listItems}</ul>);
+          inList = false;
+          listItems = [];
+        }
+        result.push(<br key={index} />);
       }
       // Regular paragraph
-      return <p key={index} className="mb-4">{line}</p>;
+      else {
+        if (inList) {
+          result.push(<ul key={`list-${index}`} className="list-disc ml-6 mb-4">{listItems}</ul>);
+          inList = false;
+          listItems = [];
+        }
+        result.push(<p key={index} className="mb-4">{line}</p>);
+      }
     });
+    
+    // Add any remaining list items
+    if (inList) {
+      result.push(<ul key="list-final" className="list-disc ml-6 mb-4">{listItems}</ul>);
+    }
+    
+    return result;
   };
 
   if (isLoading) {

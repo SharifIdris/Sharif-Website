@@ -1,7 +1,13 @@
 [build]
   publish = "app/dist"
-  command = "cd app && npm install && npm run build && cd .. && npm install glob --prefix functions"
+  command = "cd app && npm install && npm run build && cd ../functions && npm install"
   functions = "functions"
+
+[dev]
+  functions = "functions"
+  
+[functions]
+  node_bundler = "esbuild"
 
 # Enable automatic deploys from GitHub
 [build.environment]
@@ -65,7 +71,44 @@
   to = "/index.html"
   status = 200
 
-# Redirect for content files
+# API endpoints
+[[redirects]]
+  from = "/api/projects/*"
+  to = "/.netlify/functions/api-projects/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/blog/*"
+  to = "/.netlify/functions/api-blog/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/certificates/*"
+  to = "/.netlify/functions/api-certificates/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/services/*"
+  to = "/.netlify/functions/api-services/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/profile"
+  to = "/.netlify/functions/api-profile"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/migrate"
+  to = "/.netlify/functions/migrate-content"
+  status = 200
+  force = true
+
+# Legacy content paths (for backward compatibility)
 [[redirects]]
   from = "/content/*/index.json"
   to = "/.netlify/functions/content-proxy"

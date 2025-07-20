@@ -7,12 +7,11 @@ const CertificatesPage = () => {
   const [expandedId, setExpandedId] = useState(null);
 
   useEffect(() => {
-    fetch('/content/certificates/index.json')
+    fetch('/api/certificates')
       .then(response => response.json())
       .then(data => {
-        // Sort certificates by order field if available
-        const sortedData = data.sort((a, b) => (a.order || 999) - (b.order || 999));
-        setCertificates(sortedData);
+        // Certificates are already sorted by order in the API
+        setCertificates(data);
         setIsLoading(false);
       })
       .catch(error => {

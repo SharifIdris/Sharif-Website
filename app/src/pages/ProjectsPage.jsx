@@ -8,12 +8,11 @@ const ProjectsPage = () => {
   const [expandedId, setExpandedId] = useState(null);
 
   useEffect(() => {
-    fetch('/content/projects/index.json')
+    fetch('/api/projects')
       .then(response => response.json())
       .then(data => {
-        // Sort projects by order field if available
-        const sortedData = data.sort((a, b) => (a.order || 999) - (b.order || 999));
-        setProjects(sortedData);
+        // Projects are already sorted by order in the API
+        setProjects(data);
         setIsLoading(false);
       })
       .catch(error => {
