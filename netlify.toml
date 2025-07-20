@@ -135,6 +135,12 @@
   status = 200
   force = true
 
+[[redirects]]
+  from = "/api/init-db"
+  to = "/.netlify/functions/init-db"
+  status = 200
+  force = true
+
 # Legacy content paths (for backward compatibility)
 [[redirects]]
   from = "/content/*/index.json"

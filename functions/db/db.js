@@ -5,7 +5,11 @@ const pool = new Pool({
   connectionString: process.env.NEON_DATABASE_URL,
   ssl: {
     rejectUnauthorized: false // Required for Neon PostgreSQL
-  }
+  },
+  // Add specific Neon PostgreSQL settings
+  max: 10, // Maximum number of clients in the pool
+  idleTimeoutMillis: 30000, // How long a client is allowed to remain idle before being closed
+  connectionTimeoutMillis: 10000 // How long to wait for a connection to become available
 });
 
 // Helper function to run SQL queries
