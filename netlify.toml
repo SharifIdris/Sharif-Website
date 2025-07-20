@@ -5,8 +5,8 @@
 
 # Enable automatic deploys from GitHub
 [build.environment]
-  NODE_VERSION = "16"
-  NETLIFY_USE_YARN = "true"
+  NODE_VERSION = "18"
+  NETLIFY_USE_YARN = "false"
 
 # No plugins or functions are being used
 # This is a simple static site
