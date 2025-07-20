@@ -82,7 +82,7 @@ SELECT
   '/images/profile.jpg', 
   'Computer Science student at Busitema University, Certified Virtual Assistant, and AI & Automation Specialist trained by ALX Africa. I help businesses streamline operations through AI-powered automation, virtual assistance, and modern web development solutions.',
   'Lira, Uganda',
-  'contact@sharifabubakar.com',
+  'sharifidris8@gmail.com',
   'https://www.linkedin.com/in/angole-sharif-abubakar',
   'https://github.com/SharifIdris',
   'https://wa.me/sharifidris8',

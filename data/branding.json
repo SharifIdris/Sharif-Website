@@ -2,5 +2,13 @@
   "logo": "images/logo.svg",
   "favicon": "favicon.svg",
   "primaryColor": "#3498db",
-  "secondaryColor": "#2980b9"
+  "secondaryColor": "#2980b9",
+  "email": "sharifidris8@gmail.com",
+  "font": "Montserrat",
+  "animations": {
+    "enabled": true,
+    "minimal": true,
+    "transitionSpeed": "0.3s",
+    "hoverEffects": true
+  }
 }
