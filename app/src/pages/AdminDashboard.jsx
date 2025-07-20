@@ -5,31 +5,65 @@ import { motion } from 'framer-motion';
 const AdminDashboard = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [dbStatus, setDbStatus] = useState({ connected: false, message: 'Checking database connection...' });
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if user is logged in with Netlify Identity
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on('init', user => {
+    const identity = window.netlifyIdentity;
+    if (identity) {
+      const onInit = user => {
         setUser(user);
         setLoading(false);
-      });
-
-      // Handle login
-      window.netlifyIdentity.on('login', user => {
+        if (user) {
+          checkDatabaseConnection();
+        }
+      };
+      const onLogin = user => {
         setUser(user);
         setLoading(false);
-      });
-
-      // Handle logout
-      window.netlifyIdentity.on('logout', () => {
+        checkDatabaseConnection();
+      };
+      const onLogout = () => {
         setUser(null);
         navigate('/');
-      });
+      };
+
+      identity.on('init', onInit);
+      identity.on('login', onLogin);
+      identity.on('logout', onLogout);
+
+      // Initialize the identity widget
+      identity.init();
+
+      // Cleanup listeners on component unmount
+      return () => {
+        identity.off('init', onInit);
+        identity.off('login', onLogin);
+        identity.off('logout', onLogout);
+      };
     } else {
+      // If Netlify Identity is not available for any reason
       setLoading(false);
     }
   }, [navigate]);
+
+  const checkDatabaseConnection = () => {
+    fetch('/api/test-db')
+      .then(response => response.json())
+      .then(data => {
+        setDbStatus({
+          connected: true,
+          message: `Connected to ${data.database} (${data.timestamp})`
+        });
+      })
+      .catch(error => {
+        console.error('Database connection error:', error);
+        setDbStatus({
+          connected: false,
+          message: 'Failed to connect to database. Check console for details.'
+        });
+      });
+  };
 
   // If loading, show loading spinner
   if (loading) {
@@ -129,7 +163,7 @@ const AdminDashboard = () => {
 
         <div className="bg-white rounded-lg shadow-md p-6">
           <h2 className="text-xl font-bold text-gray-800 mb-4">Quick Actions</h2>
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap gap-4 mb-4">
             <button
               onClick={() => {
                 fetch('/api/migrate', {
@@ -156,6 +190,7 @@ const AdminDashboard = () => {
                   .then(response => response.json())
                   .then(data => {
                     alert(data.message || 'Database initialized successfully');
+                    checkDatabaseConnection();
                   })
                   .catch(error => {
                     console.error('Error initializing database:', error);
@@ -172,6 +207,18 @@ const AdminDashboard = () => {
             >
               View Site
             </button>
+          </div>
+          
+          <div className={`${dbStatus.connected ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'} border rounded-md p-4`}>
+            <div className="flex items-center">
+              <div className={`w-3 h-3 ${dbStatus.connected ? 'bg-green-500' : 'bg-red-500'} rounded-full mr-2`}></div>
+              <span className={`font-medium ${dbStatus.connected ? 'text-green-700' : 'text-red-700'}`}>
+                {dbStatus.connected ? 'Database Connected' : 'Database Connection Issue'}
+              </span>
+            </div>
+            <p className={`${dbStatus.connected ? 'text-green-600' : 'text-red-600'} text-sm mt-1`}>
+              {dbStatus.message}
+            </p>
           </div>
         </div>
       </div>
