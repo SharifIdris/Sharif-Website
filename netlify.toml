@@ -100,6 +100,12 @@
   force = true
 
 [[redirects]]
+  from = "/api/testimonials/*"
+  to = "/.netlify/functions/api-testimonials/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/api/profile"
   to = "/.netlify/functions/api-profile"
   status = 200

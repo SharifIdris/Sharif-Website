@@ -113,6 +113,12 @@ const AdminDashboard = () => {
               link="/admin/profile"
             />
             <AdminCard
+              title="Testimonials"
+              description="Manage client testimonials"
+              icon="quote-right"
+              link="/admin/testimonials"
+            />
+            <AdminCard
               title="Media"
               description="Upload and manage images"
               icon="images"

@@ -20,6 +20,7 @@ import NotFound from './pages/NotFound';
 // Admin Components
 import AdminDashboard from './pages/AdminDashboard';
 import AdminProjects from './pages/AdminProjects';
+import AdminTestimonials from './pages/AdminTestimonials';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -50,6 +51,7 @@ function App() {
                 <Routes>
                   <Route path="/" element={<AdminDashboard />} />
                   <Route path="/projects" element={<AdminProjects />} />
+                  <Route path="/testimonials" element={<AdminTestimonials />} />
                 </Routes>
               </AnimatePresence>
             </main>

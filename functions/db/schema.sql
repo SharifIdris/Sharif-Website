@@ -74,6 +74,21 @@ CREATE TABLE IF NOT EXISTS profile (
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Testimonials Table
+CREATE TABLE IF NOT EXISTS testimonials (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  position VARCHAR(255) NOT NULL,
+  company VARCHAR(255),
+  content TEXT NOT NULL,
+  image VARCHAR(255),
+  rating INTEGER DEFAULT 5,
+  featured BOOLEAN DEFAULT false,
+  "order" INTEGER DEFAULT 1,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Insert default profile if not exists
 INSERT INTO profile (name, title, image, bio, location, email, linkedin, github, whatsapp, cv)
 SELECT 
