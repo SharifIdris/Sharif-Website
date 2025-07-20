@@ -12,7 +12,7 @@ const BlogPost = () => {
 
   useEffect(() => {
     // First, fetch all blog posts to find the one with matching slug
-    fetch('/blog/index.json')
+    fetch('/content/blog/index.json')
       .then(response => response.json())
       .then(data => {
         const currentPost = data.find(p => p.slug === slug);
@@ -22,12 +22,12 @@ const BlogPost = () => {
           
           // Find related posts (same category, excluding current post)
           const related = data
-            .filter(p => p.category === currentPost.category && p.id !== currentPost.id)
+            .filter(p => p.category === currentPost.category && p.slug !== currentPost.slug)
             .slice(0, 3);
           setRelatedPosts(related);
           
           // Now fetch the full content of the post
-          return fetch(`/blog/${slug}.md`)
+          return fetch(`/content/blog/${slug}.md`)
             .then(response => {
               if (!response.ok) {
                 throw new Error('Failed to load post content');

@@ -8,10 +8,12 @@ const Blog = () => {
   const [filter, setFilter] = useState('all');
 
   useEffect(() => {
-    fetch('/blog/index.json')
+    fetch('/content/blog/index.json')
       .then(response => response.json())
       .then(data => {
-        setPosts(data);
+        // Sort posts by date, newest first
+        const sortedData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+        setPosts(sortedData);
         setIsLoading(false);
       })
       .catch(error => {
