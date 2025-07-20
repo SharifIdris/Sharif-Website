@@ -1,6 +1,6 @@
 [build]
-  publish = "/"
-  command = "npm install && node build.js"
+  publish = "app/dist"
+  command = "cd app && npm install && npm run build"
   functions = "functions"
 
 # Enable automatic deploys from GitHub
@@ -64,3 +64,10 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+# Redirect for content files
+[[redirects]]
+  from = "/content/*"
+  to = "/.netlify/functions/content-proxy" # This will be a new Netlify function
+  status = 200
+  force = true
