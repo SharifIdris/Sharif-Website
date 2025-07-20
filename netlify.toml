@@ -129,6 +129,12 @@
   status = 200
   force = true
 
+[[redirects]]
+  from = "/api/hello"
+  to = "/.netlify/functions/hello"
+  status = 200
+  force = true
+
 # Legacy content paths (for backward compatibility)
 [[redirects]]
   from = "/content/*/index.json"
