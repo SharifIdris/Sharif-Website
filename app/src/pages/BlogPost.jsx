@@ -349,16 +349,28 @@ Remember that your AI clone should complement your work rather than replace your
         </div>
       </section>
 
-      {/* Featured Image */}
+      {/* Featured Image or YouTube Video */}
       <section className="py-8">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-4xl mx-auto">
             <div className="rounded-lg overflow-hidden shadow-lg">
-              <img 
-                src={post.image} 
-                alt={post.title} 
-                className="w-full h-auto"
-              />
+              {post.youtube_id ? (
+                <div className="aspect-w-16 aspect-h-9">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${post.youtube_id}`}
+                    title={post.title}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="w-full h-full"
+                  ></iframe>
+                </div>
+              ) : (
+                <img 
+                  src={post.image} 
+                  alt={post.title} 
+                  className="w-full h-auto"
+                />
+              )}
             </div>
           </div>
         </div>

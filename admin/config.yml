@@ -38,6 +38,7 @@ collections:
       - {label: "Read Time", name: "readTime", widget: "string", default: "5 min read"}
       - {label: "Category", name: "category", widget: "string"}
       - {label: "Featured", name: "featured", widget: "boolean", default: false}
+      - {label: "YouTube Video ID", name: "youtubeId", widget: "string", required: false, hint: "Just the ID part from YouTube URL (e.g., dQw4w9WgXcQ)"}
       - {label: "Content", name: "body", widget: "markdown"}
 
   - name: "services"

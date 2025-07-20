@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS blog_posts (
   read_time VARCHAR(50) DEFAULT '5 min read',
   category VARCHAR(50) NOT NULL,
   featured BOOLEAN DEFAULT false,
+  youtube_id VARCHAR(50),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

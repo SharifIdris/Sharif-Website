@@ -77,7 +77,7 @@ exports.handler = async (event, context) => {
         };
       }
 
-      const { title, description, content, image, slug, date, readTime, category, featured } = JSON.parse(event.body);
+      const { title, description, content, image, slug, date, readTime, category, featured, youtubeId } = JSON.parse(event.body);
       
       // Check if slug already exists
       const existingPost = await query('SELECT id FROM blog_posts WHERE slug = $1', [slug]);
@@ -90,8 +90,8 @@ exports.handler = async (event, context) => {
       }
       
       const result = await query(
-        'INSERT INTO blog_posts (title, description, content, image, slug, date, read_time, category, featured) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *',
-        [title, description, content, image, slug, date, readTime || '5 min read', category, featured || false]
+        'INSERT INTO blog_posts (title, description, content, image, slug, date, read_time, category, featured, youtube_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *',
+        [title, description, content, image, slug, date, readTime || '5 min read', category, featured || false, youtubeId || null]
       );
       
       return {
@@ -123,11 +123,11 @@ exports.handler = async (event, context) => {
       }
       
       const slug = path.split('/')[1];
-      const { title, description, content, image, date, readTime, category, featured } = JSON.parse(event.body);
+      const { title, description, content, image, date, readTime, category, featured, youtubeId } = JSON.parse(event.body);
       
       const result = await query(
-        'UPDATE blog_posts SET title = $1, description = $2, content = $3, image = $4, date = $5, read_time = $6, category = $7, featured = $8, updated_at = CURRENT_TIMESTAMP WHERE slug = $9 RETURNING *',
-        [title, description, content, image, date, readTime, category, featured, slug]
+        'UPDATE blog_posts SET title = $1, description = $2, content = $3, image = $4, date = $5, read_time = $6, category = $7, featured = $8, youtube_id = $9, updated_at = CURRENT_TIMESTAMP WHERE slug = $10 RETURNING *',
+        [title, description, content, image, date, readTime, category, featured, youtubeId || null, slug]
       );
       
       if (result.rows.length === 0) {
