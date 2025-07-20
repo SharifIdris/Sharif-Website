@@ -80,7 +80,7 @@ SELECT
   'Angole Sharif Abubakar', 
   'Virtual Assistant & AI Tools Expert', 
   '/images/profile.jpg', 
-  'Computer Science student at Busitema University, Certified Virtual Assistant, and AI & Automation Specialist trained by ALX Africa. I help businesses streamline operations through AI-powered automation, virtual assistance, and modern web development solutions.',
+  'I\'m Angole Sharif Abubakar, a Certified Virtual Assistant and AI Tools Expert through ALX, currently pursuing Computer Science at Busitema University while deepening my skillset in Data Science and Cybersecurity. I specialize in designing intelligent systems that simplify workflows, scale businesses, and solve real-world problems through automation, creative design, and strategic implementation. My work merges technical precision with human-centered thinking: from building AI-powered dashboards and responsive portfolios to integrating scalable authentication systems using Firebase and Supabase. Whether it\'s client automation, full-stack development, or project coordination, I create digital experiences that adapt and evolve. I believe tech should be beginner-friendly, strategic, and socially impactful, and I\'m committed to building tools that reflect that mission.',
   'Lira, Uganda',
   'sharifidris8@gmail.com',
   'https://www.linkedin.com/in/angole-sharif-abubakar',
