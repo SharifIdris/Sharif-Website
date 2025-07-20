@@ -138,7 +138,8 @@
             
             // Wait for the modal to close
             setTimeout(() => {
-                window.location.href = '/admin/';
+                // Use window.location.replace to avoid adding to browser history
+                window.location.replace('/admin/');
             }, 1000);
         });
         
@@ -155,8 +156,22 @@
             statusMessage.textContent = 'You are already logged in. Redirecting to admin panel...';
             statusMessage.style.color = '#27ae60';
             setTimeout(() => {
-                window.location.href = '/admin/';
+                // Use window.location.replace to avoid adding to browser history
+                window.location.replace('/admin/');
             }, 1000);
+        }
+        
+        // Prevent redirect loops by checking the referrer
+        const referrer = document.referrer;
+        if (referrer && (referrer.includes('/admin/') || referrer.includes('/admin-access.html'))) {
+            console.log('Potential redirect loop detected');
+            // Clear any Netlify Identity session that might be causing issues
+            if (window.netlifyIdentity && window.netlifyIdentity.logout) {
+                window.netlifyIdentity.logout();
+                console.log('Logged out to prevent redirect loop');
+                errorMessage.textContent = 'Logged out to prevent redirect loop. Please try logging in again.';
+                errorMessage.style.display = 'block';
+            }
         }
     </script>
 </body>

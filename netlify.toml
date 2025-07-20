@@ -143,11 +143,19 @@
   force = true
   conditions = {Role = ["admin"]}
 
-# Redirect unauthenticated admin requests
+# Redirect unauthenticated admin requests - EXCLUDE admin-access.html
 [[redirects]]
   from = "/admin/*"
   to = "/admin-access.html"
   status = 302
+  force = true
+  conditions = {Role = ["!admin"]}
+
+# Explicitly allow access to admin-access.html
+[[redirects]]
+  from = "/admin-access.html"
+  to = "/admin-access.html"
+  status = 200
   force = true
 
 # Redirect rule to handle SPA routing - MUST be last
