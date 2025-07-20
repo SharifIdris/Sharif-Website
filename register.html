@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Admin User - Sharif Abubakar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --primary-dark: #2980b9;
+            --secondary-color: #2c3e50;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --white: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+        
+        p {
+            margin-bottom: 30px;
+            color: #666;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--primary-color);
+            color: var(--white);
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+        }
+        
+        .back-link {
+            display: block;
+            margin-top: 30px;
+            color: #666;
+            text-decoration: none;
+        }
+        
+        .back-link:hover {
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Register Admin User</h1>
+        <p>Create an admin account to access the admin panel.</p>
+        
+        <button class="btn" id="signup-button">Sign Up</button>
+        <button class="btn" id="login-button">Log In</button>
+        
+        <a href="/" class="back-link">Return to Website</a>
+    </div>
+    
+    <script>
+        document.getElementById('signup-button').addEventListener('click', function() {
+            netlifyIdentity.open('signup');
+        });
+        
+        document.getElementById('login-button').addEventListener('click', function() {
+            netlifyIdentity.open('login');
+        });
+        
+        // Redirect to admin after login
+        netlifyIdentity.on('login', user => {
+            console.log('Login', user);
+            // Wait for the modal to close
+            setTimeout(() => {
+                window.location.href = '/admin/';
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

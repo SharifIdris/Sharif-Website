@@ -14,9 +14,6 @@
   NODE_VERSION = "18"
   NETLIFY_USE_YARN = "false"
 
-# No plugins or functions are being used
-# This is a simple static site
-
 # Security headers
 [[headers]]
   for = "/*"
@@ -29,6 +26,12 @@
     Access-Control-Allow-Origin = "*"
     Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
     Access-Control-Allow-Headers = "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+
+# Registration page
+[[redirects]]
+  from = "/register"
+  to = "/register.html"
+  status = 200
 
 # Redirect admin access to secure page
 [[redirects]]
