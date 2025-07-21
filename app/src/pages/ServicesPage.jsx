@@ -1,110 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const ServicesPage = () => {
   const [activeCategory, setActiveCategory] = useState(null);
+  const [serviceCategories, setServiceCategories] = useState([]);
 
-  const serviceCategories = [
-    {
-      id: 'virtual-assistant',
-      title: 'Virtual Assistant Services',
-      icon: 'user-tie',
-      description: 'Professional administrative support to help you manage your business more efficiently.',
-      services: [
-        {
-          title: 'Email Management',
-          description: 'Inbox organization, filtering important emails, drafting responses, and follow-ups.',
-          icon: 'envelope'
-        },
-        {
-          title: 'Calendar Management',
-          description: 'Scheduling appointments, setting reminders, and organizing your daily agenda.',
-          icon: 'calendar-alt'
-        },
-        {
-          title: 'Data Entry & Management',
-          description: 'Accurate data entry, spreadsheet management, and database organization.',
-          icon: 'database'
-        },
-        {
-          title: 'Customer Support',
-          description: 'Responding to customer inquiries, managing support tickets, and follow-ups.',
-          icon: 'headset'
-        },
-        {
-          title: 'Research',
-          description: 'Comprehensive research on various topics, market analysis, and competitor research.',
-          icon: 'search'
-        }
-      ]
-    },
-    {
-      id: 'ai-automation',
-      title: 'AI & Automation Solutions',
-      icon: 'robot',
-      description: 'Leverage AI tools and automation to streamline your workflows and boost productivity.',
-      services: [
-        {
-          title: 'AI Tool Integration',
-          description: 'Integration of AI tools like ChatGPT, Claude, and Midjourney into your workflow.',
-          icon: 'plug'
-        },
-        {
-          title: 'Workflow Automation',
-          description: 'Creating automated workflows using Zapier, Make.com, or custom solutions.',
-          icon: 'cogs'
-        },
-        {
-          title: 'AI Content Generation',
-          description: 'Setting up systems for AI-assisted content creation, editing, and optimization.',
-          icon: 'file-alt'
-        },
-        {
-          title: 'Data Analysis Automation',
-          description: 'Automated data collection, processing, and visualization for better insights.',
-          icon: 'chart-bar'
-        },
-        {
-          title: 'Custom AI Solutions',
-          description: 'Developing tailored AI solutions for your specific business needs.',
-          icon: 'brain'
-        }
-      ]
-    },
-    {
-      id: 'web-development',
-      title: 'Web Development',
-      icon: 'laptop-code',
-      description: 'Modern, responsive websites and web applications built with cutting-edge technologies.',
-      services: [
-        {
-          title: 'React.js Development',
-          description: 'Building interactive user interfaces with React.js and modern JavaScript.',
-          icon: 'react'
-        },
-        {
-          title: 'WordPress Websites',
-          description: 'Custom WordPress websites with responsive design and content management.',
-          icon: 'wordpress'
-        },
-        {
-          title: 'UI/UX Design',
-          description: 'User-centered design with focus on usability, accessibility, and visual appeal.',
-          icon: 'palette'
-        },
-        {
-          title: 'E-commerce Solutions',
-          description: 'Online stores with secure payment processing, inventory management, and more.',
-          icon: 'shopping-cart'
-        },
-        {
-          title: 'Website Maintenance',
-          description: 'Regular updates, security patches, backups, and performance optimization.',
-          icon: 'tools'
-        }
-      ]
-    }
-  ];
+  useEffect(() => {
+    fetch('/content/services/index.json')
+      .then(response => response.json())
+      .then(data => {
+        const allServices = data.map(s => ({ ...s, ...s.fields }));
+        setServiceCategories(allServices);
+      });
+  }, []);
 
   const toggleCategory = (id) => {
     setActiveCategory(activeCategory === id ? null : id);

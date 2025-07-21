@@ -8,52 +8,16 @@ const Blog = () => {
   const [filter, setFilter] = useState('all');
 
   useEffect(() => {
-    fetch('/api/blog')
+    fetch('/content/blog/index.json')
       .then(response => response.json())
       .then(data => {
-        // Posts are already sorted by date in the API
-        setPosts(data);
+        const allPosts = data.map(p => ({ ...p, ...p.fields }));
+        setPosts(allPosts.sort((a, b) => new Date(b.date) - new Date(a.date)));
         setIsLoading(false);
       })
       .catch(error => {
         console.error('Error fetching blog posts:', error);
         setIsLoading(false);
-        // Fallback data in case the fetch fails
-        setPosts([
-          {
-            id: 1,
-            title: 'Top 5 AI Tools for Virtual Assistants in 2023',
-            description: 'Discover the most powerful AI tools that can help virtual assistants boost productivity and deliver better results.',
-            image: '/images/blog-1.jpg',
-            date: '2023-10-15',
-            readTime: '5 min read',
-            category: 'AI Tools',
-            featured: true,
-            slug: 'top-5-ai-tools'
-          },
-          {
-            id: 2,
-            title: 'How to Monetize Your Creativity with AI Clones',
-            description: 'Learn how to leverage AI technology to create digital versions of yourself that can generate income while you sleep.',
-            image: '/images/blog-2.jpg',
-            date: '2023-09-22',
-            readTime: '8 min read',
-            category: 'Business',
-            featured: false,
-            slug: 'monetizing-creativity-with-ai-clones-virtual-influencers-smart-product-demos'
-          },
-          {
-            id: 3,
-            title: 'Trending AI Tools for Creative Tech: Image Generation',
-            description: 'Explore the latest AI image generation tools that are revolutionizing design, marketing, and content creation.',
-            image: '/images/blog-3.jpg',
-            date: '2023-08-10',
-            readTime: '6 min read',
-            category: 'Technology',
-            featured: false,
-            slug: 'trending-ai-tools-for-creative-tech-image-generation'
-          }
-        ]);
       });
   }, []);
 

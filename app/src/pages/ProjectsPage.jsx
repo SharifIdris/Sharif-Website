@@ -8,79 +8,16 @@ const ProjectsPage = () => {
   const [expandedId, setExpandedId] = useState(null);
 
   useEffect(() => {
-    fetch('/api/projects')
+    fetch('/content/projects/index.json')
       .then(response => response.json())
       .then(data => {
-        // Projects are already sorted by order in the API
-        setProjects(data);
+        const allProjects = data.map(p => ({ ...p, ...p.fields }));
+        setProjects(allProjects.sort((a, b) => a.order - b.order));
         setIsLoading(false);
       })
       .catch(error => {
         console.error('Error fetching projects:', error);
         setIsLoading(false);
-        // Fallback data in case the fetch fails
-        setProjects([
-          {
-            id: 1,
-            title: 'Executive Virtual Assistance',
-            brief: 'Comprehensive virtual assistance for busy professionals',
-            description: 'Providing comprehensive virtual assistance services including inbox management, scheduling, document preparation, and administrative support for executives and business owners.',
-            image: '/images/portfolio-1.jpg',
-            category: 'virtual-assistant',
-            tech: ['Google Workspace', 'Notion', 'Trello', 'Calendly'],
-            link: '#'
-          },
-          {
-            id: 2,
-            title: 'AI Email Assistant',
-            brief: 'Email automation with AI integration',
-            description: 'Custom email automation tool that categorizes incoming emails, prioritizes them based on content, and drafts responses using AI. Integrates with Gmail and Outlook.',
-            image: '/images/portfolio-2.jpg',
-            category: 'ai-tools',
-            tech: ['ChatGPT', 'Gemini', 'Gmail API', 'Zapier'],
-            link: 'https://github.com/SharifIdris/ai-email-assistant'
-          },
-          {
-            id: 3,
-            title: 'Portfolio Website',
-            brief: 'Modern responsive portfolio website',
-            description: 'A modern, responsive portfolio website built with React, Tailwind CSS, and Framer Motion. Features include smooth animations, responsive design, and a content management system.',
-            image: '/images/portfolio-3.jpg',
-            category: 'web',
-            tech: ['React', 'Tailwind CSS', 'Framer Motion', 'Netlify CMS'],
-            link: '#'
-          },
-          {
-            id: 4,
-            title: 'Client Onboarding System',
-            brief: 'Streamlined client onboarding process',
-            description: 'A comprehensive client onboarding system that automates the collection of client information, contract signing, and initial setup. Improves efficiency and client experience.',
-            image: '/images/portfolio-4.jpg',
-            category: 'virtual-assistant',
-            tech: ['Notion', 'Make.com', 'DocuSign', 'Google Forms'],
-            link: '#'
-          },
-          {
-            id: 5,
-            title: 'AI Content Generator',
-            brief: 'Automated content creation with AI',
-            description: 'An AI-powered content generation system that creates blog posts, social media content, and marketing copy based on specific prompts and brand guidelines.',
-            image: '/images/portfolio-5.jpg',
-            category: 'ai-tools',
-            tech: ['GPT-4', 'Midjourney', 'Zapier', 'WordPress'],
-            link: '#'
-          },
-          {
-            id: 6,
-            title: 'E-commerce Website',
-            brief: 'Custom e-commerce solution',
-            description: 'A custom e-commerce website built with modern web technologies. Features include product catalog, shopping cart, secure checkout, and admin dashboard.',
-            image: '/images/portfolio-6.jpg',
-            category: 'web',
-            tech: ['React', 'Node.js', 'MongoDB', 'Stripe'],
-            link: '#'
-          }
-        ]);
       });
   }, []);
 

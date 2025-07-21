@@ -7,43 +7,16 @@ const CertificatesPage = () => {
   const [expandedId, setExpandedId] = useState(null);
 
   useEffect(() => {
-    fetch('/api/certificates')
+    fetch('/content/certificates/index.json')
       .then(response => response.json())
       .then(data => {
-        // Certificates are already sorted by order in the API
-        setCertificates(data);
+        const allCertificates = data.map(c => ({ ...c, ...c.fields }));
+        setCertificates(allCertificates.sort((a, b) => a.order - b.order));
         setIsLoading(false);
       })
       .catch(error => {
         console.error('Error fetching certificates:', error);
         setIsLoading(false);
-        // Fallback data in case the fetch fails
-        setCertificates([
-          {
-            id: 1,
-            title: 'Virtual Assistant Certification',
-            issuer: 'ALX Africa',
-            date: 'June 2023',
-            description: 'Comprehensive training in virtual assistance, including administrative support, email management, scheduling, and client communication.',
-            image: '/images/certificates/va-cert.jpg'
-          },
-          {
-            id: 2,
-            title: 'AI & Automation Specialist',
-            issuer: 'ALX Africa',
-            date: 'September 2023',
-            description: 'Advanced training in AI tools, automation workflows, and integration of AI solutions for business process optimization.',
-            image: '/images/certificates/ai-cert.jpg'
-          },
-          {
-            id: 3,
-            title: 'Web Development',
-            issuer: 'Udemy',
-            date: 'January 2023',
-            description: 'Comprehensive course covering modern web development technologies including HTML5, CSS3, JavaScript, React.js, and responsive design principles.',
-            image: '/images/certificates/web-dev-cert.jpg'
-          }
-        ]);
       });
   }, []);
 
