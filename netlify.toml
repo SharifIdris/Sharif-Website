@@ -1,6 +1,6 @@
 [build]
   publish = "app/dist"
-  command = "cd app && npm install && npm run build && cd .. && mkdir -p app/dist/admin && cp -r admin/* app/dist/admin/ && cp register.html app/dist/ && cp admin-access.html app/dist/ && cd functions && npm install"
+  command = "cd app && npm install && npm run build && cd .. && mkdir -p app/dist/admin && cp -r admin/* app/dist/admin/ && cp register.html app/dist/ && cp admin-login.html app/dist/ && cd functions && npm install"
   functions = "functions"
 
 [dev]
@@ -107,12 +107,6 @@
   to = "/register.html"
   status = 200
 
-# Redirect admin access to secure page
-[[redirects]]
-  from = "/admin-login"
-  to = "/admin-access.html"
-  status = 200
-
 # Redirect for image upload page
 [[redirects]]
   from = "/image-upload"
@@ -143,19 +137,11 @@
   force = true
   conditions = {Role = ["admin"]}
 
-# Redirect unauthenticated admin requests - EXCLUDE admin-access.html
+# Redirect unauthenticated admin requests to login page
 [[redirects]]
   from = "/admin/*"
-  to = "/admin-access.html"
+  to = "/admin-login.html"
   status = 302
-  force = true
-  conditions = {Role = ["!admin"]}
-
-# Explicitly allow access to admin-access.html
-[[redirects]]
-  from = "/admin-access.html"
-  to = "/admin-access.html"
-  status = 200
   force = true
 
 # Redirect rule to handle SPA routing - MUST be last
