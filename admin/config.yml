@@ -87,3 +87,15 @@ collections:
           - {label: "GitHub", name: "github", widget: "string"}
           - {label: "WhatsApp", name: "whatsapp", widget: "string"}
           - {label: "CV File", name: "cv", widget: "file", required: false}
+
+  - name: "testimonials"
+    label: "Testimonials"
+    folder: "app/public/content/testimonials"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Name", name: "name", widget: "string"}
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Quote", name: "quote", widget: "text"}
+      - {label: "Avatar", name: "avatar", widget: "image", required: false}
+      - {label: "Featured", name: "featured", widget: "boolean", default: false}
