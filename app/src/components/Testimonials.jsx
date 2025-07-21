@@ -6,18 +6,37 @@ import client from '../contentful';
 const Testimonials = ({ featured }) => {
   const [testimonials, setTestimonials] = useState([]);
 
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
-    const fetchParams = { content_type: 'testimonial' };
+    const fetchParams = { 
+      content_type: 'testimonial',
+      select: 'fields.clientName,fields.roleOrCompany,fields.testimonialContent,fields.profileImage,fields.featuredStatus'
+    };
+    
     if (featured) {
       fetchParams['fields.featuredStatus'] = true;
     }
     
+    setIsLoading(true);
     client.getEntries(fetchParams)
       .then((response) => {
-        const allTestimonials = response.items.map(t => ({ ...t.fields, id: t.sys.id }));
+        const allTestimonials = response.items.map(t => ({
+          id: t.sys.id,
+          clientName: t.fields.clientName,
+          roleOrCompany: t.fields.roleOrCompany,
+          testimonialContent: t.fields.testimonialContent,
+          profileImage: t.fields.profileImage
+        }));
         setTestimonials(allTestimonials);
+        setIsLoading(false);
       })
-      .catch(console.error);
+      .catch(err => {
+        console.error('Error fetching testimonials:', err);
+        setError(err);
+        setIsLoading(false);
+      });
   }, [featured]);
 
   return (

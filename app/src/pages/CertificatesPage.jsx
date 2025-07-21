@@ -8,17 +8,31 @@ const CertificatesPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [expandedId, setExpandedId] = useState(null);
 
+  const [error, setError] = useState(null);
+
   useEffect(() => {
-    client.getEntries({ content_type: 'certificate' })
-      .then((response) => {
-        const allCertificates = response.items.map(c => ({ ...c.fields, id: c.sys.id }));
-        setCertificates(allCertificates.sort((a, b) => new Date(b.date) - new Date(a.date)));
-        setIsLoading(false);
-      })
-      .catch(error => {
-        console.error('Error fetching certificates:', error);
-        setIsLoading(false);
-      });
+    client.getEntries({ 
+      content_type: 'certificate',
+      select: 'fields.title,fields.issuer,fields.date,fields.description,fields.file',
+      order: '-fields.date'
+    })
+    .then((response) => {
+      const allCertificates = response.items.map(c => ({
+        id: c.sys.id,
+        title: c.fields.title,
+        issuer: c.fields.issuer,
+        date: c.fields.date,
+        description: c.fields.description,
+        file: c.fields.file
+      }));
+      setCertificates(allCertificates);
+      setIsLoading(false);
+    })
+    .catch(error => {
+      console.error('Error fetching certificates:', error);
+      setError(error);
+      setIsLoading(false);
+    });
   }, []);
 
   const toggleExpand = (id) => {

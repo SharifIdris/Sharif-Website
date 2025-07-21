@@ -9,16 +9,28 @@ const ProjectsPage = () => {
   const [expandedId, setExpandedId] = useState(null);
 
   useEffect(() => {
-    client.getEntries({ content_type: 'project' })
-      .then((response) => {
-        const allProjects = response.items.map(p => ({ ...p.fields, id: p.sys.id }));
-        setProjects(allProjects.sort((a, b) => a.title.localeCompare(b.title)));
-        setIsLoading(false);
-      })
-      .catch(error => {
-        console.error('Error fetching projects:', error);
-        setIsLoading(false);
-      });
+    client.getEntries({ 
+      content_type: 'project',
+      order: '-fields.date',
+      select: 'fields.title,fields.description,fields.image,fields.tech_stack,fields.live_demo_url,fields.github_url'
+    })
+    .then((response) => {
+      const allProjects = response.items.map(p => ({
+        id: p.sys.id,
+        title: p.fields.title,
+        description: p.fields.description,
+        image: p.fields.image,
+        tech_stack: p.fields.tech_stack || [],
+        live_demo_url: p.fields.live_demo_url,
+        github_url: p.fields.github_url
+      }));
+      setProjects(allProjects);
+      setIsLoading(false);
+    })
+    .catch(error => {
+      console.error('Error fetching projects from Contentful:', error);
+      setIsLoading(false);
+    });
   }, []);
 
   const filteredProjects = projects;

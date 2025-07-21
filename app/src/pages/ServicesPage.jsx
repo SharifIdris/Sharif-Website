@@ -6,28 +6,45 @@ const ServicesPage = () => {
   const [activeCategory, setActiveCategory] = useState(null);
   const [serviceCategories, setServiceCategories] = useState([]);
 
-  useEffect(() => {
-    client.getEntries({ content_type: 'serviceItem' })
-      .then((response) => {
-        const services = response.items.map(s => ({ ...s.fields, id: s.sys.id }));
-        const categories = services.reduce((acc, service) => {
-          const category = service.category || 'General';
-          if (!acc[category]) {
-            acc[category] = [];
-          }
-          acc[category].push(service);
-          return acc;
-        }, {});
-        
-        const categoryArray = Object.keys(categories).map(key => ({
-          id: key,
-          title: key,
-          services: categories[key]
-        }));
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-        setServiceCategories(categoryArray);
-      })
-      .catch(console.error);
+  useEffect(() => {
+    client.getEntries({ 
+      content_type: 'serviceItem',
+      select: 'fields.title,fields.category,fields.short_description,fields.icon'
+    })
+    .then((response) => {
+      const services = response.items.map(s => ({ 
+        id: s.sys.id,
+        title: s.fields.title,
+        category: s.fields.category || 'General',
+        short_description: s.fields.short_description,
+        icon: s.fields.icon
+      }));
+      
+      const categories = services.reduce((acc, service) => {
+        if (!acc[service.category]) {
+          acc[service.category] = [];
+        }
+        acc[service.category].push(service);
+        return acc;
+      }, {});
+      
+      const categoryArray = Object.keys(categories).map(key => ({
+        id: key,
+        title: key,
+        services: categories[key]
+      }));
+
+      setServiceCategories(categoryArray);
+      setIsLoading(false);
+    })
+    .catch(err => {
+      console.error('Error fetching services:', err);
+      setError(err);
+      setIsLoading(false);
+    });
   }, []);
 
   const toggleCategory = (id) => {
