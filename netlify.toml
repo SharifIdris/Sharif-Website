@@ -1,6 +1,6 @@
 [build]
   publish = "app/dist"
-  command = "cd app && npm install && npm run build && cd .. && mkdir -p app/dist/admin && cp -r admin/* app/dist/admin/ && cp register.html app/dist/ && cp admin-login.html app/dist/ && cd functions && npm install"
+  command = "cd app && npm install && npm run build && cd .. && cd functions && npm install"
   functions = "functions"
 
 [dev]
