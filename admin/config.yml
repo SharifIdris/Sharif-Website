@@ -1,6 +1,6 @@
 backend:
-  name: git-gateway
-  branch: main
+  name: contentful
+  space_id: hk8kaeaoi9ri
 
 media_folder: "app/public/images/uploads"
 public_folder: "/images/uploads"

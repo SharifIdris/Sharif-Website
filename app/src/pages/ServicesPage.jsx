@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import client from '../contentful';
 
 const ServicesPage = () => {
   const [activeCategory, setActiveCategory] = useState(null);
   const [serviceCategories, setServiceCategories] = useState([]);
 
   useEffect(() => {
-    fetch('/content/services/index.json')
-      .then(response => response.json())
-      .then(data => {
-        const allServices = data.map(s => ({ ...s, ...s.fields }));
+    client.getEntries({ content_type: 'services' })
+      .then((response) => {
+        const allServices = response.items.map(s => ({ ...s.fields, id: s.sys.id }));
         setServiceCategories(allServices);
-      });
+      })
+      .catch(console.error);
   }, []);
 
   const toggleCategory = (id) => {

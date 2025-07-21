@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import client from '../contentful';
 
 const ProjectsPage = () => {
   const [projects, setProjects] = useState([]);
@@ -8,10 +9,9 @@ const ProjectsPage = () => {
   const [expandedId, setExpandedId] = useState(null);
 
   useEffect(() => {
-    fetch('/content/projects/index.json')
-      .then(response => response.json())
-      .then(data => {
-        const allProjects = data.map(p => ({ ...p, ...p.fields }));
+    client.getEntries({ content_type: 'projects' })
+      .then((response) => {
+        const allProjects = response.items.map(p => ({ ...p.fields, id: p.sys.id }));
         setProjects(allProjects.sort((a, b) => a.order - b.order));
         setIsLoading(false);
       })
@@ -109,7 +109,7 @@ const ProjectsPage = () => {
                       <div className={`${expandedId === project.id ? 'md:w-1/2' : ''}`}>
                         <div className="h-48 overflow-hidden">
                           <img 
-                            src={project.image} 
+                            src={project.image.fields.file.url} 
                             alt={project.title} 
                             className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                           />

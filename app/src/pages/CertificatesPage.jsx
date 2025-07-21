@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import client from '../contentful';
 
 const CertificatesPage = () => {
   const [certificates, setCertificates] = useState([]);
@@ -7,10 +8,9 @@ const CertificatesPage = () => {
   const [expandedId, setExpandedId] = useState(null);
 
   useEffect(() => {
-    fetch('/content/certificates/index.json')
-      .then(response => response.json())
-      .then(data => {
-        const allCertificates = data.map(c => ({ ...c, ...c.fields }));
+    client.getEntries({ content_type: 'certificates' })
+      .then((response) => {
+        const allCertificates = response.items.map(c => ({ ...c.fields, id: c.sys.id }));
         setCertificates(allCertificates.sort((a, b) => a.order - b.order));
         setIsLoading(false);
       })
@@ -115,7 +115,7 @@ const CertificatesPage = () => {
                           <div className="border-t border-gray-100 pt-4 mt-2">
                             <div className="aspect-w-16 aspect-h-9 mb-4">
                               <img 
-                                src={certificate.image} 
+                                src={certificate.image.fields.file.url} 
                                 alt={certificate.title} 
                                 className="rounded-lg shadow-sm object-cover w-full"
                               />

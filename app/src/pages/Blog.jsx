@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import client from '../contentful';
 
 const Blog = () => {
   const [posts, setPosts] = useState([]);
@@ -8,10 +9,9 @@ const Blog = () => {
   const [filter, setFilter] = useState('all');
 
   useEffect(() => {
-    fetch('/content/blog/index.json')
-      .then(response => response.json())
-      .then(data => {
-        const allPosts = data.map(p => ({ ...p, ...p.fields }));
+    client.getEntries({ content_type: 'blog' })
+      .then((response) => {
+        const allPosts = response.items.map(p => ({ ...p.fields, id: p.sys.id }));
         setPosts(allPosts.sort((a, b) => new Date(b.date) - new Date(a.date)));
         setIsLoading(false);
       })
@@ -75,7 +75,7 @@ const Blog = () => {
                   <div className="md:flex">
                     <div className="md:w-2/5">
                       <img 
-                        src={post.image} 
+                        src={post.image.fields.file.url} 
                         alt={post.title} 
                         className="h-full w-full object-cover"
                       />
@@ -166,7 +166,7 @@ const Blog = () => {
                   >
                     <div className="h-48 overflow-hidden">
                       <img 
-                        src={post.image} 
+                        src={post.image.fields.file.url} 
                         alt={post.title} 
                         className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                       />
