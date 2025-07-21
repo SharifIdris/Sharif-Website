@@ -3,175 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Access Required - Sharif Abubakar</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Admin Access Required</title>
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <style>
-        :root {
-            --primary-color: #3498db;
-            --primary-dark: #2980b9;
-            --secondary-color: #2c3e50;
-            --text-color: #333;
-            --light-bg: #f8f9fa;
-            --white: #ffffff;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: var(--light-bg);
-            color: var(--text-color);
-            line-height: 1.6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            background-color: var(--white);
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 500px;
-            padding: 40px;
-            text-align: center;
-        }
-        
-        h1 {
-            font-size: 28px;
-            margin-bottom: 20px;
-            color: var(--secondary-color);
-        }
-        
-        p {
-            margin-bottom: 30px;
-            color: #666;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background-color: var(--primary-color);
-            color: var(--white);
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            margin: 10px;
-        }
-        
-        .btn:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-3px);
-        }
-        
-        .back-link {
-            display: block;
-            margin-top: 30px;
-            color: #666;
-            text-decoration: none;
-        }
-        
-        .back-link:hover {
-            color: var(--primary-color);
-        }
-        
-        .error-message {
-            color: #e74c3c;
-            margin-top: 20px;
-            padding: 10px;
-            border-radius: 5px;
-            background-color: rgba(231, 76, 60, 0.1);
-            display: none;
-        }
-    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Admin Access Required</h1>
-        <p id="status-message">You need to be logged in as an administrator to access this area.</p>
-        
-        <button class="btn" id="login-button">Log In</button>
-        <button class="btn" id="signup-button">Sign Up</button>
-        
-        <div id="error-message" class="error-message"></div>
-        
-        <a href="/" class="back-link">Return to Website</a>
-    </div>
+    <h1>Admin Access Required</h1>
+    <p>You must be logged in to view the admin area. Redirecting to login...</p>
     
     <script>
-        // Initialize Netlify Identity
         if (window.netlifyIdentity) {
+            // Initialize the widget
             window.netlifyIdentity.init();
-        }
-        
-        const loginButton = document.getElementById('login-button');
-        const signupButton = document.getElementById('signup-button');
-        const statusMessage = document.getElementById('status-message');
-        const errorMessage = document.getElementById('error-message');
-        
-        loginButton.addEventListener('click', function() {
-            errorMessage.style.display = 'none';
+
+            // When a user logs in, redirect them to the admin dashboard
+            window.netlifyIdentity.on('login', user => {
+                window.location.href = '/admin/';
+            });
+
+            // When a login error occurs, display it to the user
+            window.netlifyIdentity.on('error', (err) => {
+                console.error('Login Error:', err);
+                const p = document.querySelector('p');
+                p.textContent = `Login failed: ${err.message}. Redirecting to the homepage...`;
+                p.style.color = 'red';
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 3000); // Wait 3 seconds before redirecting
+            });
+
+            // When the login modal is closed, we check if the user is logged in.
+            // If they are not, we redirect them to the home page so they
+            // aren't stuck on this access page.
+            window.netlifyIdentity.on('close', () => {
+                const user = window.netlifyIdentity.currentUser();
+                if (!user) {
+                    window.location.href = '/';
+                }
+            });
+
+            // Automatically open the login modal
             window.netlifyIdentity.open('login');
-        });
-        
-        signupButton.addEventListener('click', function() {
-            errorMessage.style.display = 'none';
-            window.netlifyIdentity.open('signup');
-        });
-        
-        // Redirect to admin after login
-        window.netlifyIdentity.on('login', user => {
-            console.log('Login successful');
-            statusMessage.textContent = 'Login successful! Redirecting to admin panel...';
-            statusMessage.style.color = '#27ae60';
-            
-            // Wait for the modal to close
-            setTimeout(() => {
-                // Use window.location.replace to avoid adding to browser history
-                window.location.replace('/admin/');
-            }, 1000);
-        });
-        
-        // Handle login errors
-        window.netlifyIdentity.on('error', err => {
-            console.error('Netlify Identity Error:', err);
-            errorMessage.textContent = `Login failed: ${err.message || 'User not found'}`;
-            errorMessage.style.display = 'block';
-        });
-        
-        // Check if user is already logged in
-        const user = window.netlifyIdentity.currentUser();
-        if (user) {
-            statusMessage.textContent = 'You are already logged in. Redirecting to admin panel...';
-            statusMessage.style.color = '#27ae60';
-            setTimeout(() => {
-                // Use window.location.replace to avoid adding to browser history
-                window.location.replace('/admin/');
-            }, 1000);
-        }
-        
-        // Prevent redirect loops by checking the referrer
-        const referrer = document.referrer;
-        if (referrer && (referrer.includes('/admin/') || referrer.includes('/admin-access.html'))) {
-            console.log('Potential redirect loop detected');
-            // Clear any Netlify Identity session that might be causing issues
-            if (window.netlifyIdentity && window.netlifyIdentity.logout) {
-                window.netlifyIdentity.logout();
-                console.log('Logged out to prevent redirect loop');
-                errorMessage.textContent = 'Logged out to prevent redirect loop. Please try logging in again.';
-                errorMessage.style.display = 'block';
-            }
         }
     </script>
 </body>
