@@ -163,62 +163,13 @@ const AdminDashboard = () => {
 
         <div className="bg-white rounded-lg shadow-md p-6">
           <h2 className="text-xl font-bold text-gray-800 mb-4">Quick Actions</h2>
-          <div className="flex flex-wrap gap-4 mb-4">
-            <button
-              onClick={() => {
-                fetch('/api/migrate', {
-                  headers: {
-                    Authorization: `Bearer ${user.token.access_token}`
-                  }
-                })
-                  .then(response => response.json())
-                  .then(data => {
-                    alert(data.message || 'Migration completed');
-                  })
-                  .catch(error => {
-                    console.error('Error during migration:', error);
-                    alert('Error during migration. Check console for details.');
-                  });
-              }}
-              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md text-sm transition-colors duration-300"
-            >
-              Migrate Content
-            </button>
-            <button
-              onClick={() => {
-                fetch('/api/init-db')
-                  .then(response => response.json())
-                  .then(data => {
-                    alert(data.message || 'Database initialized successfully');
-                    checkDatabaseConnection();
-                  })
-                  .catch(error => {
-                    console.error('Error initializing database:', error);
-                    alert('Error initializing database. Check console for details.');
-                  });
-              }}
-              className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md text-sm transition-colors duration-300"
-            >
-              Initialize Database
-            </button>
+          <div className="flex flex-wrap gap-4">
             <button
               onClick={() => window.open('/', '_blank')}
               className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-md text-sm transition-colors duration-300"
             >
               View Site
             </button>
-          </div>
-          
-          <div className={`${dbStatus.connected ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'} border rounded-md p-4`}>
-            <div className="flex items-center">
-              <div className={`w-3 h-3 ${dbStatus.connected ? 'bg-green-500' : 'bg-red-500'} rounded-full mr-2`}></div>
-              <span className={`font-medium ${dbStatus.connected ? 'text-green-700' : 'text-red-700'}`}>
-                {dbStatus.connected ? 'Database Connected' : 'Database Connection Issue'}
-              </span>
-            </div>
-            <p className={`${dbStatus.connected ? 'text-green-600' : 'text-red-600'} text-sm mt-1`}>
-              {dbStatus.message}
-            </p>
           </div>
         </div>
       </div>
