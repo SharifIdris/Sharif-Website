@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import client from '../contentful';
+import contentService from '../services/contentService';
 
 const Projects = () => {
   const [projects, setProjects] = useState([]);
   const [isOpen, setIsOpen] = useState(true); // Default to open
 
   useEffect(() => {
-    client.getEntries({
-      content_type: 'project',
-      'fields.featured': true
-    })
-    .then((response) => {
-      const featuredProjects = response.items.map(p => ({ ...p.fields, id: p.sys.id }));
+    contentService.getProjects()
+    .then((projects) => {
+      const featuredProjects = projects.filter(p => p.featured);
       setProjects(featuredProjects);
     })
     .catch((error) => console.error('Error fetching projects:', error));

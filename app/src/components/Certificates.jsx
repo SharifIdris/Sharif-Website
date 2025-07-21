@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
-import client from '../contentful';
+import contentService from '../services/contentService';
 
 const Certificates = () => {
   const [certificates, setCertificates] = useState([]);
@@ -9,9 +9,8 @@ const Certificates = () => {
   const [expandedId, setExpandedId] = useState(null);
 
   useEffect(() => {
-    client.getEntries({ content_type: 'certificate' })
-      .then((response) => {
-        const allCertificates = response.items.map(c => ({ ...c.fields, id: c.sys.id }));
+    contentService.getCertificates()
+      .then((allCertificates) => {
         setCertificates(allCertificates.sort((a, b) => new Date(b.date) - new Date(a.date)));
         setIsLoading(false);
       })
@@ -97,17 +96,17 @@ const Certificates = () => {
                     >
                       <div className="px-6 pb-6">
                         <div className="border-t border-gray-100 pt-4 mt-2">
-                          {certificate.file && (
+                          {(certificate.image || certificate.file) && (
                             <div className="mb-4">
-                              {certificate.file.fields.file.contentType.startsWith('image/') ? (
+                              {(certificate.image || certificate.file?.fields?.file?.contentType?.startsWith('image/')) ? (
                                 <img 
-                                  src={certificate.file.fields.file.url} 
+                                  src={certificate.image || certificate.file.fields.file.url} 
                                   alt={certificate.title} 
                                   className="rounded-lg shadow-sm object-cover w-full"
                                 />
                               ) : (
                                 <a 
-                                  href={certificate.file.fields.file.url} 
+                                  href={certificate.image || certificate.file.fields.file.url} 
                                   target="_blank" 
                                   rel="noopener noreferrer"
                                   className="text-blue-500 hover:underline"
@@ -119,7 +118,9 @@ const Certificates = () => {
                           )}
                           {certificate.description && (
                             <div className="prose prose-lg max-w-none">
-                              {documentToReactComponents(certificate.description)}
+                              {typeof certificate.description === 'string' 
+                                ? certificate.description 
+                                : documentToReactComponents(certificate.description)}
                             </div>
                           )}
                         </div>
