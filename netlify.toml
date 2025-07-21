@@ -137,14 +137,14 @@
   force = true
   conditions = {Role = ["admin"]}
 
-# Redirect unauthenticated admin requests to login page
-[[redirects]]
-  from = "/admin/*"
-  to = "/admin-login.html"
-  status = 302
-  force = true
-
 # Redirect rule to handle SPA routing - MUST be last
+[[redirects]]
+  from = "/admin-dashboard"
+  to = "/admin-dashboard.html"
+  status = 200
+  force = true
+  conditions = {Role = ["admin"]}
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
