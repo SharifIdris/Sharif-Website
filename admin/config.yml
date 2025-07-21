@@ -12,18 +12,36 @@ collections:
     create: true
     slug: "{{slug}}"
     fields:
-      - {label: "Title", name: "title", widget: "string"}
-      - {label: "Brief Description", name: "brief", widget: "string"}
-      - {label: "Full Description", name: "description", widget: "text"}
-      - {label: "Image", name: "image", widget: "image"}
-      - {label: "Category", name: "category", widget: "select", options: ["virtual-assistant", "ai-tools", "web"]}
-      - label: "Technologies Used"
-        name: "tech"
+      - {label: "Project Name", name: "title", widget: "string"}
+      - {label: "Description", name: "description", widget: "markdown"}
+      - label: "Tech Stack"
+        name: "tech_stack"
         widget: "list"
         field: {label: "Technology", name: "technology", widget: "string"}
-      - {label: "Project Link", name: "link", widget: "string", required: false}
+      - label: "Project Status"
+        name: "status"
+        widget: "select"
+        options: ["Completed", "In Progress"]
+      - {label: "Cover Image", name: "image", widget: "image"}
+      - {label: "Live Demo URL", name: "live_demo_url", widget: "string", required: false}
+      - {label: "GitHub URL", name: "github_url", widget: "string", required: false}
+      - {label: "Embedded Video URL", name: "video_url", widget: "string", required: false}
       - {label: "Featured", name: "featured", widget: "boolean", default: false}
-      - {label: "Order", name: "order", widget: "number", default: 1}
+
+  - name: "certificates"
+    label: "Certificates"
+    folder: "app/public/content/certificates"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Certificate Title", name: "title", widget: "string"}
+      - {label: "Recipient Name", name: "recipient_name", widget: "string"}
+      - {label: "Role or Program", name: "role_or_program", widget: "string"}
+      - {label: "Date Issued", name: "date", widget: "datetime"}
+      - {label: "Certificate File", name: "file", widget: "file"}
+      - {label: "Issuer Name", name: "issuer", widget: "string"}
+      - {label: "Description", name: "description", widget: "markdown"}
+      - {label: "Featured", name: "featured", widget: "boolean", default: false}
 
   - name: "blog"
     label: "Blog Posts"
@@ -32,14 +50,25 @@ collections:
     slug: "{{slug}}"
     fields:
       - {label: "Title", name: "title", widget: "string"}
-      - {label: "Description", name: "description", widget: "text"}
-      - {label: "Image", name: "image", widget: "image"}
+      - {label: "Author", name: "author", widget: "string"}
       - {label: "Publish Date", name: "date", widget: "datetime"}
-      - {label: "Read Time", name: "readTime", widget: "string", default: "5 min read"}
-      - {label: "Category", name: "category", widget: "string"}
-      - {label: "Featured", name: "featured", widget: "boolean", default: false}
-      - {label: "YouTube Video ID", name: "youtubeId", widget: "string", required: false, hint: "Just the ID part from YouTube URL (e.g., dQw4w9WgXcQ)"}
-      - {label: "Content", name: "body", widget: "markdown"}
+      - {label: "Featured Image", name: "image", widget: "image"}
+      - label: "Tags"
+        name: "tags"
+        widget: "list"
+        field: {label: "Tag", name: "tag", widget: "string"}
+      - {label: "Summary", name: "summary", widget: "text"}
+      - {label: "Body", name: "body", widget: "markdown"}
+      - {label: "Video File Upload", name: "video_file", widget: "file", required: false}
+      - {label: "Embedded Video URL", name: "video_url", widget: "string", required: false}
+      - label: "Related Posts"
+        name: "related_posts"
+        widget: "relation"
+        collection: "blog"
+        search_fields: ["title"]
+        value_field: "title"
+        multiple: true
+        required: false
 
   - name: "services"
     label: "Services"
@@ -47,46 +76,14 @@ collections:
     create: true
     slug: "{{slug}}"
     fields:
-      - {label: "Title", name: "title", widget: "string"}
-      - {label: "Description", name: "description", widget: "text"}
-      - {label: "Icon", name: "icon", widget: "string", hint: "FontAwesome icon class (e.g., fa-user-tie)"}
+      - {label: "Service Name", name: "title", widget: "string"}
+      - {label: "Service Icon", name: "icon", widget: "image"}
+      - {label: "Short Description", name: "short_description", widget: "text"}
+      - {label: "Detailed Description", name: "body", widget: "markdown"}
+      - {label: "Category", name: "category", widget: "string"}
+      - {label: "Pricing", name: "pricing", widget: "number", required: false}
+      - {label: "Availability", name: "available", widget: "boolean", default: true}
       - {label: "Featured", name: "featured", widget: "boolean", default: false}
-      - label: "Service Items"
-        name: "items"
-        widget: "list"
-        field: {label: "Item", name: "item", widget: "string"}
-      - {label: "Content", name: "body", widget: "markdown"}
-
-  - name: "certificates"
-    label: "Certificates"
-    folder: "app/public/content/certificates"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - {label: "Title", name: "title", widget: "string"}
-      - {label: "Issuer", name: "issuer", widget: "string"}
-      - {label: "Date", name: "date", widget: "string"}
-      - {label: "Description", name: "description", widget: "text", required: false}
-      - {label: "Image", name: "image", widget: "image"}
-      - {label: "Order", name: "order", widget: "number", default: 1}
-
-  - name: "settings"
-    label: "Settings"
-    files:
-      - label: "Profile"
-        name: "profile"
-        file: "app/public/content/settings/profile.json"
-        fields:
-          - {label: "Name", name: "name", widget: "string"}
-          - {label: "Title", name: "title", widget: "string"}
-          - {label: "Profile Image", name: "image", widget: "image"}
-          - {label: "Bio", name: "bio", widget: "text"}
-          - {label: "Location", name: "location", widget: "string"}
-          - {label: "Email", name: "email", widget: "string"}
-          - {label: "LinkedIn", name: "linkedin", widget: "string"}
-          - {label: "GitHub", name: "github", widget: "string"}
-          - {label: "WhatsApp", name: "whatsapp", widget: "string"}
-          - {label: "CV File", name: "cv", widget: "file", required: false}
 
   - name: "testimonials"
     label: "Testimonials"
@@ -94,8 +91,46 @@ collections:
     create: true
     slug: "{{slug}}"
     fields:
-      - {label: "Name", name: "name", widget: "string"}
-      - {label: "Title", name: "title", widget: "string"}
-      - {label: "Quote", name: "quote", widget: "text"}
-      - {label: "Avatar", name: "avatar", widget: "image", required: false}
+      - {label: "Client Name", name: "name", widget: "string"}
+      - {label: "Profile Image", name: "avatar", widget: "image", required: false}
+      - {label: "Role or Company", name: "title", widget: "string"}
+      - {label: "Testimonial Content", name: "quote", widget: "markdown"}
+      - {label: "Rating", name: "rating", widget: "number", min: 1, max: 5, step: 1, required: false}
       - {label: "Featured", name: "featured", widget: "boolean", default: false}
+      - {label: "Date Submitted", name: "date", widget: "datetime"}
+
+  - name: "logo_assets"
+    label: "Logo Assets"
+    folder: "app/public/content/logos"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Logo Image", name: "image", widget: "image"}
+      - label: "Logo Type"
+        name: "type"
+        widget: "select"
+        options: ["Primary", "Secondary", "Favicon"]
+      - {label: "Upload Date", name: "date", widget: "datetime"}
+
+  - name: "settings"
+    label: "Settings"
+    files:
+      - label: "About Me"
+        name: "about"
+        file: "app/public/content/settings/about.json"
+        fields:
+          - {label: "Profile Image", name: "image", widget: "image"}
+          - {label: "Short Bio", name: "bio", widget: "text"}
+          - {label: "Long Biography", name: "long_bio", widget: "markdown"}
+          - label: "Contact Info"
+            name: "contact"
+            widget: "object"
+            fields:
+              - {label: "Email", name: "email", widget: "string"}
+              - {label: "LinkedIn", name: "linkedin", widget: "string"}
+              - {label: "GitHub", name: "github", widget: "string"}
+              - {label: "WhatsApp", name: "whatsapp", widget: "string"}
+          - label: "Featured Skill Tags"
+            name: "skills"
+            widget: "list"
+            field: {label: "Skill", name: "skill", widget: "string"}

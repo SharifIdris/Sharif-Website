@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import client from '../contentful';
 
 const CertificatesPage = () => {
@@ -8,10 +9,10 @@ const CertificatesPage = () => {
   const [expandedId, setExpandedId] = useState(null);
 
   useEffect(() => {
-    client.getEntries({ content_type: 'certificates' })
+    client.getEntries({ content_type: 'certificate' })
       .then((response) => {
         const allCertificates = response.items.map(c => ({ ...c.fields, id: c.sys.id }));
-        setCertificates(allCertificates.sort((a, b) => a.order - b.order));
+        setCertificates(allCertificates.sort((a, b) => new Date(b.date) - new Date(a.date)));
         setIsLoading(false);
       })
       .catch(error => {
@@ -78,7 +79,7 @@ const CertificatesPage = () => {
                         <div>
                           <h2 className="text-xl font-bold text-gray-800">{certificate.title}</h2>
                           <p className="text-gray-600">
-                            {certificate.issuer} • {certificate.date}
+                            {certificate.issuer} • {new Date(certificate.date).toLocaleDateString()}
                           </p>
                         </div>
                       </div>
@@ -113,15 +114,30 @@ const CertificatesPage = () => {
                       >
                         <div className="px-6 pb-6">
                           <div className="border-t border-gray-100 pt-4 mt-2">
-                            <div className="aspect-w-16 aspect-h-9 mb-4">
-                              <img 
-                                src={certificate.image.fields.file.url} 
-                                alt={certificate.title} 
-                                className="rounded-lg shadow-sm object-cover w-full"
-                              />
-                            </div>
+                            {certificate.file && (
+                              <div className="mb-4">
+                                {certificate.file.fields.file.contentType.startsWith('image/') ? (
+                                  <img 
+                                    src={certificate.file.fields.file.url} 
+                                    alt={certificate.title} 
+                                    className="rounded-lg shadow-sm object-cover w-full"
+                                  />
+                                ) : (
+                                  <a 
+                                    href={certificate.file.fields.file.url} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="text-blue-500 hover:underline"
+                                  >
+                                    View Certificate (PDF)
+                                  </a>
+                                )}
+                              </div>
+                            )}
                             {certificate.description && (
-                              <p className="text-gray-600 mt-4">{certificate.description}</p>
+                              <div className="prose prose-lg max-w-none">
+                                {documentToReactComponents(certificate.description)}
+                              </div>
                             )}
                           </div>
                         </div>

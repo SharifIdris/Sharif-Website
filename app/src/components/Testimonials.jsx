@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+import client from '../contentful';
 
 const Testimonials = ({ featured }) => {
   const [testimonials, setTestimonials] = useState([]);
 
   useEffect(() => {
-    fetch('/content/testimonials/index.json')
-      .then(response => response.json())
-      .then(data => {
-        const allTestimonials = data.map(t => ({ ...t, ...t.fields }));
-        if (featured) {
-          setTestimonials(allTestimonials.filter(t => t.featured));
-        } else {
-          setTestimonials(allTestimonials);
-        }
-      });
+    const fetchParams = { content_type: 'testimonial' };
+    if (featured) {
+      fetchParams['fields.featuredStatus'] = true;
+    }
+    
+    client.getEntries(fetchParams)
+      .then((response) => {
+        const allTestimonials = response.items.map(t => ({ ...t.fields, id: t.sys.id }));
+        setTestimonials(allTestimonials);
+      })
+      .catch(console.error);
   }, [featured]);
 
   return (
@@ -24,24 +27,26 @@ const Testimonials = ({ featured }) => {
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {testimonials.map((testimonial, index) => (
             <motion.div
-              key={index}
+              key={testimonial.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-white rounded-lg shadow-md p-6"
+              className="bg-white rounded-lg shadow-md p-6 flex flex-col"
             >
-              <p className="text-gray-600 mb-4">"{testimonial.quote}"</p>
-              <div className="flex items-center">
-                {testimonial.avatar && (
+              <div className="text-gray-600 mb-4 flex-grow">
+                {documentToReactComponents(testimonial.testimonialContent)}
+              </div>
+              <div className="flex items-center mt-auto">
+                {testimonial.profileImage && (
                   <img
-                    src={testimonial.avatar}
-                    alt={testimonial.name}
+                    src={testimonial.profileImage.fields.file.url}
+                    alt={testimonial.clientName}
                     className="w-12 h-12 rounded-full mr-4"
                   />
                 )}
                 <div>
-                  <p className="font-semibold">{testimonial.name}</p>
-                  <p className="text-sm text-gray-500">{testimonial.title}</p>
+                  <p className="font-semibold">{testimonial.clientName}</p>
+                  <p className="text-sm text-gray-500">{testimonial.roleOrCompany}</p>
                 </div>
               </div>
             </motion.div>

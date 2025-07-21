@@ -13,6 +13,7 @@
   "author": "Sharif Abubakar",
   "license": "MIT",
   "dependencies": {
+    "@contentful/rich-text-react-renderer": "^16.1.0",
     "@octokit/auth-app": "^4.0.9",
     "@octokit/rest": "^19.0.7",
     "@supabase/supabase-js": "^2.39.0",

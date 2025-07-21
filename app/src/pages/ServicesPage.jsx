@@ -7,10 +7,25 @@ const ServicesPage = () => {
   const [serviceCategories, setServiceCategories] = useState([]);
 
   useEffect(() => {
-    client.getEntries({ content_type: 'services' })
+    client.getEntries({ content_type: 'serviceItem' })
       .then((response) => {
-        const allServices = response.items.map(s => ({ ...s.fields, id: s.sys.id }));
-        setServiceCategories(allServices);
+        const services = response.items.map(s => ({ ...s.fields, id: s.sys.id }));
+        const categories = services.reduce((acc, service) => {
+          const category = service.category || 'General';
+          if (!acc[category]) {
+            acc[category] = [];
+          }
+          acc[category].push(service);
+          return acc;
+        }, {});
+        
+        const categoryArray = Object.keys(categories).map(key => ({
+          id: key,
+          title: key,
+          services: categories[key]
+        }));
+
+        setServiceCategories(categoryArray);
       })
       .catch(console.error);
   }, []);
@@ -64,16 +79,8 @@ const ServicesPage = () => {
                 >
                   <div className="flex justify-between items-center">
                     <div className="flex items-center">
-                      <div className={`w-12 h-12 rounded-full flex items-center justify-center mr-4 ${
-                        activeCategory === category.id ? 'bg-white text-blue-500' : 'bg-blue-100 text-blue-500'
-                      }`}>
-                        <i className={`fas fa-${category.icon} text-xl`}></i>
-                      </div>
                       <div>
                         <h2 className="text-2xl font-bold">{category.title}</h2>
-                        <p className={`${activeCategory === category.id ? 'text-blue-100' : 'text-gray-600'}`}>
-                          {category.description}
-                        </p>
                       </div>
                     </div>
                     <div className={`transform transition-transform duration-300 ${
@@ -108,17 +115,19 @@ const ServicesPage = () => {
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6 bg-gray-50">
                         {category.services.map((service, index) => (
                           <motion.div
-                            key={index}
+                            key={service.id}
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.3, delay: index * 0.1 }}
                             className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
                           >
-                            <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                              <i className={`fas fa-${service.icon} text-blue-500`}></i>
-                            </div>
+                            {service.icon && (
+                              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                                <img src={service.icon.fields.file.url} alt={service.title} className="w-8 h-8" />
+                              </div>
+                            )}
                             <h3 className="text-xl font-semibold text-gray-800 mb-2">{service.title}</h3>
-                            <p className="text-gray-600">{service.description}</p>
+                            <p className="text-gray-600">{service.short_description}</p>
                           </motion.div>
                         ))}
                       </div>

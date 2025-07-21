@@ -9,10 +9,10 @@ const Blog = () => {
   const [filter, setFilter] = useState('all');
 
   useEffect(() => {
-    client.getEntries({ content_type: 'blog' })
+    client.getEntries({ content_type: 'blogPost' })
       .then((response) => {
         const allPosts = response.items.map(p => ({ ...p.fields, id: p.sys.id }));
-        setPosts(allPosts.sort((a, b) => new Date(b.date) - new Date(a.date)));
+        setPosts(allPosts.sort((a, b) => new Date(b.publishDate) - new Date(a.publishDate)));
         setIsLoading(false);
       })
       .catch(error => {
@@ -21,13 +21,23 @@ const Blog = () => {
       });
   }, []);
 
-  // Extract unique categories from posts
-  const categories = ['all', ...new Set(posts.map(post => post.category))];
+  // Extract unique tags from posts
+  const allTags = posts.reduce((acc, post) => {
+    if (post.tags) {
+      post.tags.forEach(tag => {
+        if (!acc.includes(tag)) {
+          acc.push(tag);
+        }
+      });
+    }
+    return acc;
+  }, []);
+  const tags = ['all', ...allTags];
 
-  // Filter posts based on selected category
+  // Filter posts based on selected tag
   const filteredPosts = filter === 'all' 
     ? posts 
-    : posts.filter(post => post.category === filter);
+    : posts.filter(post => post.tags && post.tags.includes(filter));
 
   // Get featured posts
   const featuredPosts = posts.filter(post => post.featured);
@@ -81,20 +91,22 @@ const Blog = () => {
                       />
                     </div>
                     <div className="p-6 md:w-3/5">
-                      <span className="text-sm text-blue-500 font-medium">{post.category}</span>
+                      <div className="flex flex-wrap gap-2 mb-2">
+                        {post.tags && post.tags.map(tag => (
+                          <span key={tag} className="text-sm text-blue-500 font-medium bg-blue-100 px-2 py-1 rounded-full">{tag}</span>
+                        ))}
+                      </div>
                       <h3 className="text-xl font-bold text-gray-800 mt-2 mb-3">
-                        <Link to={`/blog/${post.slug}`} className="hover:text-blue-500 transition-colors duration-300">
+                        <Link to={`/blog/${post.id}`} className="hover:text-blue-500 transition-colors duration-300">
                           {post.title}
                         </Link>
                       </h3>
-                      <p className="text-gray-600 mb-4">{post.description}</p>
+                      <p className="text-gray-600 mb-4">{post.summary}</p>
                       <div className="flex items-center text-gray-500 text-sm">
-                        <span>{post.date}</span>
-                        <span className="mx-2">•</span>
-                        <span>{post.readTime}</span>
+                        <span>{new Date(post.publishDate).toLocaleDateString()}</span>
                       </div>
                       <Link 
-                        to={`/blog/${post.slug}`} 
+                        to={`/blog/${post.id}`} 
                         className="mt-4 inline-flex items-center text-blue-500 hover:text-blue-700 font-medium transition-colors duration-300"
                       >
                         Read More
@@ -126,19 +138,19 @@ const Blog = () => {
       <section className="py-8">
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex flex-wrap justify-center gap-4">
-            {categories.map((category, index) => (
+            {tags.map((tag, index) => (
               <motion.button
                 key={index}
-                onClick={() => setFilter(category)}
+                onClick={() => setFilter(tag)}
                 className={`px-6 py-2 rounded-full transition-colors duration-300 capitalize ${
-                  filter === category
+                  filter === tag
                     ? 'bg-blue-500 text-white'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                {category}
+                {tag}
               </motion.button>
             ))}
           </div>
@@ -172,22 +184,25 @@ const Blog = () => {
                       />
                     </div>
                     <div className="p-6">
+                      <div className="flex flex-wrap gap-2 mb-2">
+                        {post.tags && post.tags.map(tag => (
+                          <span key={tag} className="text-sm text-blue-500 font-medium bg-blue-100 px-2 py-1 rounded-full">{tag}</span>
+                        ))}
+                      </div>
                       <div className="flex justify-between items-center mb-3">
-                        <span className="text-sm text-blue-500 font-medium">{post.category}</span>
                         <div className="flex items-center text-gray-500 text-sm">
-                          <span>{post.date}</span>
+                          <span>{new Date(post.publishDate).toLocaleDateString()}</span>
                         </div>
                       </div>
                       <h3 className="text-xl font-bold text-gray-800 mb-3">
-                        <Link to={`/blog/${post.slug}`} className="hover:text-blue-500 transition-colors duration-300">
+                        <Link to={`/blog/${post.id}`} className="hover:text-blue-500 transition-colors duration-300">
                           {post.title}
                         </Link>
                       </h3>
-                      <p className="text-gray-600 mb-4">{post.description}</p>
+                      <p className="text-gray-600 mb-4">{post.summary}</p>
                       <div className="flex justify-between items-center">
-                        <span className="text-gray-500 text-sm">{post.readTime}</span>
                         <Link 
-                          to={`/blog/${post.slug}`} 
+                          to={`/blog/${post.id}`} 
                           className="inline-flex items-center text-blue-500 hover:text-blue-700 font-medium transition-colors duration-300"
                         >
                           Read More

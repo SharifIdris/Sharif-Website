@@ -9,10 +9,10 @@ const ProjectsPage = () => {
   const [expandedId, setExpandedId] = useState(null);
 
   useEffect(() => {
-    client.getEntries({ content_type: 'projects' })
+    client.getEntries({ content_type: 'project' })
       .then((response) => {
         const allProjects = response.items.map(p => ({ ...p.fields, id: p.sys.id }));
-        setProjects(allProjects.sort((a, b) => a.order - b.order));
+        setProjects(allProjects.sort((a, b) => a.title.localeCompare(b.title)));
         setIsLoading(false);
       })
       .catch(error => {
@@ -21,16 +21,7 @@ const ProjectsPage = () => {
       });
   }, []);
 
-  const categories = [
-    { id: 'all', name: 'All Projects' },
-    { id: 'virtual-assistant', name: 'Virtual Assistant' },
-    { id: 'ai-tools', name: 'AI Tools' },
-    { id: 'web', name: 'Web Development' }
-  ];
-
-  const filteredProjects = filter === 'all' 
-    ? projects 
-    : projects.filter(project => project.category === filter);
+  const filteredProjects = projects;
 
   const toggleExpand = (id) => {
     setExpandedId(expandedId === id ? null : id);
@@ -60,28 +51,6 @@ const ProjectsPage = () => {
         </div>
       </section>
 
-      {/* Filter Section */}
-      <section className="py-8">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="flex flex-wrap justify-center gap-4">
-            {categories.map((category) => (
-              <motion.button
-                key={category.id}
-                onClick={() => setFilter(category.id)}
-                className={`px-6 py-2 rounded-full transition-colors duration-300 ${
-                  filter === category.id
-                    ? 'bg-blue-500 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {category.name}
-              </motion.button>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Projects Grid */}
       <section className="py-8 pb-16">
@@ -119,9 +88,6 @@ const ProjectsPage = () => {
                       <div className={`p-6 ${expandedId === project.id ? 'md:w-1/2' : ''}`}>
                         <div className="flex justify-between items-start mb-3">
                           <div>
-                            <span className="text-sm text-blue-500 font-medium capitalize">
-                              {project.category}
-                            </span>
                             <h3 className="text-xl font-semibold text-gray-800 mt-1">
                               {project.title}
                             </h3>
@@ -148,7 +114,7 @@ const ProjectsPage = () => {
                         </div>
                         
                         <p className="text-gray-600 mb-4">
-                          {expandedId === project.id ? project.description : project.brief}
+                          {expandedId === project.id ? project.description : `${project.description.substring(0, 100)}...`}
                         </p>
                         
                         <AnimatePresence>
@@ -162,7 +128,7 @@ const ProjectsPage = () => {
                               <div className="mb-4">
                                 <h4 className="text-sm font-semibold text-gray-700 mb-2">Technologies Used:</h4>
                                 <div className="flex flex-wrap gap-2">
-                                  {project.tech.map((tech, index) => (
+                                  {project.tech_stack.map((tech, index) => (
                                     <span 
                                       key={index}
                                       className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded"
@@ -176,28 +142,56 @@ const ProjectsPage = () => {
                           )}
                         </AnimatePresence>
                         
-                        <a 
-                          href={project.link} 
-                          target="_blank" 
-                          rel="noopener noreferrer" 
-                          className="text-blue-500 hover:text-blue-700 font-medium inline-flex items-center transition-colors duration-300"
-                        >
-                          View Project
-                          <svg 
-                            className="w-4 h-4 ml-1" 
-                            fill="none" 
-                            stroke="currentColor" 
-                            viewBox="0 0 24 24" 
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path 
-                              strokeLinecap="round" 
-                              strokeLinejoin="round" 
-                              strokeWidth={2} 
-                              d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" 
-                            />
-                          </svg>
-                        </a>
+                        <div className="flex gap-4">
+                          {project.live_demo_url && (
+                            <a 
+                              href={project.live_demo_url} 
+                              target="_blank" 
+                              rel="noopener noreferrer" 
+                              className="text-blue-500 hover:text-blue-700 font-medium inline-flex items-center transition-colors duration-300"
+                            >
+                              View Project
+                              <svg 
+                                className="w-4 h-4 ml-1" 
+                                fill="none" 
+                                stroke="currentColor" 
+                                viewBox="0 0 24 24" 
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path 
+                                  strokeLinecap="round" 
+                                  strokeLinejoin="round" 
+                                  strokeWidth={2} 
+                                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" 
+                                />
+                              </svg>
+                            </a>
+                          )}
+                          {project.github_url && (
+                            <a 
+                              href={project.github_url} 
+                              target="_blank" 
+                              rel="noopener noreferrer" 
+                              className="text-gray-500 hover:text-gray-700 font-medium inline-flex items-center transition-colors duration-300"
+                            >
+                              GitHub
+                              <svg 
+                                className="w-4 h-4 ml-1" 
+                                fill="none" 
+                                stroke="currentColor" 
+                                viewBox="0 0 24 24" 
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path 
+                                  strokeLinecap="round" 
+                                  strokeLinejoin="round" 
+                                  strokeWidth={2} 
+                                  d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" 
+                                />
+                              </svg>
+                            </a>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </motion.div>
