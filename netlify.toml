@@ -137,6 +137,13 @@
   force = true
   conditions = {Role = ["admin"]}
 
+# Fallback for unauthenticated admin access
+[[redirects]]
+  from = "/admin/*"
+  to = "/admin-login.html"
+  status = 401 # Unauthorized
+  force = true
+
 # Redirect rule to handle SPA routing - MUST be last
 [[redirects]]
   from = "/admin-dashboard"
