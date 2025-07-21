@@ -1,20 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
-import client from '../contentful';
+import contentService from '../services/contentService';
 
 const Testimonials = ({ featured }) => {
   const [testimonials, setTestimonials] = useState([]);
 
   useEffect(() => {
-    const fetchParams = { content_type: 'testimonial' };
-    if (featured) {
-      fetchParams['fields.featuredStatus'] = true;
-    }
-    
-    client.getEntries(fetchParams)
-      .then((response) => {
-        const allTestimonials = response.items.map(t => ({ ...t.fields, id: t.sys.id }));
+    contentService.getTestimonials(featured)
+      .then((allTestimonials) => {
         setTestimonials(allTestimonials);
       })
       .catch(console.error);
@@ -34,19 +28,19 @@ const Testimonials = ({ featured }) => {
               className="bg-white rounded-lg shadow-md p-6 flex flex-col"
             >
               <div className="text-gray-600 mb-4 flex-grow">
-                {documentToReactComponents(testimonial.testimonialContent)}
+                {testimonial.content || testimonial.testimonialContent}
               </div>
               <div className="flex items-center mt-auto">
-                {testimonial.profileImage && (
+                {(testimonial.image || testimonial.profileImage) && (
                   <img
-                    src={testimonial.profileImage.fields.file.url}
-                    alt={testimonial.clientName}
+                    src={testimonial.image?.fields?.file?.url || testimonial.image}
+                    alt={testimonial.name || testimonial.clientName}
                     className="w-12 h-12 rounded-full mr-4"
                   />
                 )}
                 <div>
-                  <p className="font-semibold">{testimonial.clientName}</p>
-                  <p className="text-sm text-gray-500">{testimonial.roleOrCompany}</p>
+                  <p className="font-semibold">{testimonial.name || testimonial.clientName}</p>
+                  <p className="text-sm text-gray-500">{testimonial.position || testimonial.roleOrCompany}</p>
                 </div>
               </div>
             </motion.div>

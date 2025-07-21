@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
-import client from '../contentful';
+import contentService from '../services/contentService';
 import NotFound from './NotFound';
 
 const BlogPost = () => {
@@ -15,20 +15,18 @@ const BlogPost = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    client.getEntry(slug)
-      .then((response) => {
-        setPost({ ...response.fields, id: response.sys.id });
+    contentService.getBlogPost(slug)
+      .then((post) => {
+        setPost(post);
         
         // Fetch related posts
-        if (response.fields.tags && response.fields.tags.length > 0) {
-          client.getEntries({
-            content_type: 'blogPost',
-            'fields.tags[in]': response.fields.tags.join(','),
-            'sys.id[ne]': slug,
-            limit: 3
-          })
-          .then(relatedResponse => {
-            setRelatedPosts(relatedResponse.items.map(p => ({ ...p.fields, id: p.sys.id })));
+        if (post.tags && post.tags.length > 0) {
+          contentService.getBlogPosts()
+          .then(allPosts => {
+            const related = allPosts
+              .filter(p => p.id !== slug && p.tags && p.tags.some(tag => post.tags.includes(tag)))
+              .slice(0, 3);
+            setRelatedPosts(related);
           });
         }
       })
@@ -109,7 +107,7 @@ const BlogPost = () => {
             </Link>
             <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">{post.title}</h1>
             <div className="flex justify-center items-center text-gray-600 space-x-4">
-              <span>{new Date(post.publishDate).toLocaleDateString()}</span>
+              <span>{new Date(post.date || post.publishDate).toLocaleDateString()}</span>
               {post.tags && post.tags.length > 0 && (
                 <>
                   <span>•</span>
@@ -142,12 +140,12 @@ const BlogPost = () => {
                 </div>
               ) : post.videoFileUpload ? (
                  <video controls className="w-full h-auto">
-                    <source src={post.videoFileUpload.fields.file.url} type={post.videoFileUpload.fields.file.contentType} />
+                    <source src={post.videoFileUpload?.fields?.file?.url || post.videoFileUpload} type={post.videoFileUpload?.fields?.file?.contentType || 'video/mp4'} />
                     Your browser does not support the video tag.
                 </video>
-              ) : post.featuredImage && (
+              ) : (post.featuredImage || post.image) && (
                 <img 
-                  src={post.featuredImage.fields.file.url} 
+                  src={post.featuredImage?.fields?.file?.url || post.image?.fields?.file?.url || post.image} 
                   alt={post.title} 
                   className="w-full h-auto"
                 />
@@ -167,7 +165,12 @@ const BlogPost = () => {
               transition={{ duration: 0.5, delay: 0.3 }}
               className="prose prose-lg max-w-none"
             >
-              {documentToReactComponents(post.body, renderOptions)}
+              {typeof post.content === 'string' 
+                ? <div dangerouslySetInnerHTML={{ __html: post.content }} />
+                : post.body 
+                  ? documentToReactComponents(post.body, renderOptions)
+                  : <div dangerouslySetInnerHTML={{ __html: post.content || '' }} />
+              }
             </motion.div>
 
             {/* Tags */}
@@ -253,7 +256,7 @@ const BlogPost = () => {
                       </Link>
                     </h3>
                     <div className="flex justify-between items-center text-sm text-gray-500">
-                      <span>{new Date(relatedPost.publishDate).toLocaleDateString()}</span>
+                      <span>{new Date(relatedPost.date || relatedPost.publishDate).toLocaleDateString()}</span>
                     </div>
                   </div>
                 </motion.div>

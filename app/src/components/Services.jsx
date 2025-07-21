@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import client from '../contentful';
+import contentService from '../services/contentService';
 
 const Services = () => {
   const [services, setServices] = useState([]);
   const [isOpen, setIsOpen] = useState(true); // Default to open
 
   useEffect(() => {
-    client.getEntries({
-      content_type: 'serviceItem',
-      'fields.featured': true
-    })
-    .then((response) => {
-      const featuredServices = response.items.map(s => ({ ...s.fields, id: s.sys.id }));
+    contentService.getServices()
+    .then((services) => {
+      const featuredServices = services.filter(s => s.featured);
       setServices(featuredServices);
     })
     .catch((error) => console.error('Error fetching services:', error));

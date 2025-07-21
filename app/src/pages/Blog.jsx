@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import client from '../contentful';
+import contentService from '../services/contentService';
 
 const Blog = () => {
   const [posts, setPosts] = useState([]);
@@ -9,10 +9,9 @@ const Blog = () => {
   const [filter, setFilter] = useState('all');
 
   useEffect(() => {
-    client.getEntries({ content_type: 'blogPost' })
-      .then((response) => {
-        const allPosts = response.items.map(p => ({ ...p.fields, id: p.sys.id }));
-        setPosts(allPosts.sort((a, b) => new Date(b.publishDate) - new Date(a.publishDate)));
+    contentService.getBlogPosts()
+      .then((allPosts) => {
+        setPosts(allPosts.sort((a, b) => new Date(b.date || b.publishDate) - new Date(a.date || a.publishDate)));
         setIsLoading(false);
       })
       .catch(error => {
@@ -85,7 +84,7 @@ const Blog = () => {
                   <div className="md:flex">
                     <div className="md:w-2/5">
                       <img 
-                        src={post.image.fields.file.url} 
+                        src={post.image?.fields?.file?.url || post.image} 
                         alt={post.title} 
                         className="h-full w-full object-cover"
                       />
@@ -103,7 +102,7 @@ const Blog = () => {
                       </h3>
                       <p className="text-gray-600 mb-4">{post.summary}</p>
                       <div className="flex items-center text-gray-500 text-sm">
-                        <span>{new Date(post.publishDate).toLocaleDateString()}</span>
+                        <span>{new Date(post.date || post.publishDate).toLocaleDateString()}</span>
                       </div>
                       <Link 
                         to={`/blog/${post.id}`} 
@@ -178,7 +177,7 @@ const Blog = () => {
                   >
                     <div className="h-48 overflow-hidden">
                       <img 
-                        src={post.image.fields.file.url} 
+                        src={post.image?.fields?.file?.url || post.image} 
                         alt={post.title} 
                         className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                       />
@@ -191,7 +190,7 @@ const Blog = () => {
                       </div>
                       <div className="flex justify-between items-center mb-3">
                         <div className="flex items-center text-gray-500 text-sm">
-                          <span>{new Date(post.publishDate).toLocaleDateString()}</span>
+                          <span>{new Date(post.date || post.publishDate).toLocaleDateString()}</span>
                         </div>
                       </div>
                       <h3 className="text-xl font-bold text-gray-800 mb-3">
