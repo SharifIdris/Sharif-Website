@@ -15,7 +15,7 @@ export default function Blog() {
     client.getEntries({
       content_type: 'blogPost',
       order: '-fields.date',
-      select: 'fields.title,fields.slug,fields.date,fields.excerpt,fields.featuredImage,fields.tags'
+      select: 'fields.title,fields.slug,fields.date,fields.excerpt,fields.featuredImage,fields.tags,fields.content'
     })
     .then(response => {
       setPosts(response.items);

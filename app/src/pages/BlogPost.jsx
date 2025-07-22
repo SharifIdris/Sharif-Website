@@ -15,7 +15,8 @@ export default function BlogPost() {
     client.getEntries({
       content_type: 'blogPost',
       'fields.slug': slug,
-      limit: 1
+      limit: 1,
+      select: 'fields.title,fields.slug,fields.date,fields.excerpt,fields.featuredImage,fields.tags,fields.content'
     })
     .then(response => {
       if (response.items.length > 0) {
