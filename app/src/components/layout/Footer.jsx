@@ -72,8 +72,8 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-start">
                 <i className="fas fa-envelope text-blue-500 mt-1 mr-3"></i>
-                <a href="mailto:contact@sharifabubakar.com" className="text-gray-600 hover:text-blue-500 transition-colors duration-300">
-                  contact@sharifabubakar.com
+                <a href="mailto:sharifidris8@gmail.com" className="text-gray-600 hover:text-blue-500 transition-colors duration-300">
+                  sharifidris8@gmail.com
                 </a>
               </li>
               <li className="flex items-start">
