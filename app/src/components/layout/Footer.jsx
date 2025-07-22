@@ -93,7 +93,7 @@ const Footer = () => {
         {/* Copyright */}
         <div className="pt-6 border-t border-gray-100 text-center">
           <p className="text-gray-600 text-sm">
-            &copy; {currentYear} Sharif Abubakar. All rights reserved. Made with <span className="text-blue-500">💡</span> in Uganda
+            &copy; {currentYear} Sharif Abubakar. All rights reserved.
           </p>
         </div>
       </div>
